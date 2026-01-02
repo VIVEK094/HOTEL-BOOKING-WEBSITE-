@@ -1,0 +1,257 @@
+<!-- filepath: c:\Users\VIVEK\env2\hotel\templates\invoice_pdf.html -->
+<html>
+<head>
+    <title>Hotel Grand View | Invoice</title>
+    <style>
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            background: linear-gradient(135deg, #f7e9c4 0%, #e6e6fa 100%);
+            margin: 0;
+            padding: 0;
+        }
+        .invoice-container {
+            max-width: 900px;
+            min-height: 600px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+            padding: 32px 28px 48px 28px;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+        .hotel-header {
+            text-align: center;
+            padding-bottom: 18px;
+            margin-bottom: 28px;
+            border-bottom: 2px solid #d4af37;
+        }
+        .hotel-header h1 {
+            color: #d4af37;
+            font-size: 2.2rem;
+            margin: 0;
+            letter-spacing: 2px;
+            font-family: 'Cinzel', serif;
+        }
+        .hotel-header .stars {
+            color: #d4af37;
+            font-size: 1.1rem;
+            margin-top: 6px;
+            letter-spacing: 2px;
+        }
+        .hotel-header p {
+            font-size: 1rem;
+            color: #555;
+            margin: 6px 0 0 0;
+        }
+        .invoice-title {
+            text-align: right;
+            font-size: 1.4rem;
+            color: #333;
+            margin-bottom: 10px;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 1px;
+        }
+        .invoice-meta {
+            margin-bottom: 18px;
+            font-size: 0.98rem;
+            color: #444;
+            text-align: right;
+        }
+        .section-title {
+            font-size: 1.08rem;
+            color: #d4af37;
+            margin-top: 22px;
+            margin-bottom: 8px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .details-table, .charges-table {
+            width: 100%;
+            margin-bottom: 18px;
+            border-collapse: collapse;
+        }
+        .details-table th, .details-table td,
+        .charges-table th, .charges-table td {
+            padding: 8px 6px;
+            border-bottom: 1px solid #f0e6d2;
+            font-size: 0.98rem;
+        }
+        .details-table th, .charges-table th {
+            background: #f9eec0;
+            color: #7c5e10;
+            font-weight: 600;
+            text-align: left;
+        }
+        .charges-table .totals-row td {
+            font-weight: bold;
+            color: #333;
+            background: #f7f7f7;
+        }
+        .charges-table .grand-total {
+            color: #fff;
+            background: linear-gradient(90deg, #d4af37 60%, #e6c36b 100%);
+            font-size: 1.08rem;
+            border-radius: 6px;
+        }
+        .hotel-info {
+            margin-top: 22px;
+            font-size: 0.98rem;
+            color: #555;
+            line-height: 1.6;
+            background: #f9f6ee;
+            border-radius: 8px;
+            padding: 12px 18px;
+        }
+        .footer {
+            margin-top: 32px;
+            width: 100%;
+            text-align: center;
+            color: #888;
+            font-size: 0.98rem;
+            letter-spacing: 1px;
+        }
+        .footer .signature {
+            margin-top: 10px;
+            font-size: 0.92rem;
+            color: #aaa;
+        }
+        .logo {
+            width: 60px;
+            margin-bottom: 8px;
+        }
+        /* Decorative background overlay */
+        .bg-overlay {
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, #d4af37 0%, #fff0 70%);
+            opacity: 0.18;
+            z-index: 0;
+        }
+        .bg-overlay2 {
+            position: absolute;
+            bottom: -60px;
+            left: -60px;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, #e6e6fa 0%, #fff0 70%);
+            opacity: 0.18;
+            z-index: 0;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-container">
+        <div class="bg-overlay"></div>
+        <div class="bg-overlay2"></div>
+        <div class="content">
+            {% comment %} <div class="hotel-header"><img src="https://img.icons8.com/ios-filled/100/000000/hotel.png" class="logo" alt="Hotel Logo"/> {% endcomment %}
+                <h1>HOTEL GRAND VIEW</h1>
+                <div class="stars">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+                <p>123 Luxury Avenue, City Center, Metropolis, 400001</p>
+                <p>Phone: +91-9876543210 | Email: info@hotelgrandview.com</p>
+                <p>GSTIN: 27AAACR1234F1Z5</p>
+            </div>
+            <div class="invoice-title">BOOKING RECEIPT</div>
+            <div class="invoice-meta">
+                <strong>Invoice No:</strong> {{ invoice_no }}<br>
+                <strong>Date of Issue:</strong> {{ invoice_date }}<br>
+                <strong>Booking Reference:</strong> {{ room_name }}-{{ guests }}-{{ nights }}
+            </div>
+
+            <div class="section-title">Guest Details</div>
+            <table class="details-table">
+                <tr>
+                    <th>Name</th>
+                    <td>{{ name }}</td>
+                </tr>
+                <tr>
+                    <th>Phone</th>
+                    <td>{{ phone }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ email|default:"-" }}</td>
+                </tr>
+            </table>
+
+            <div class="section-title">Booking Details</div>
+            <table class="details-table">
+                <tr>
+                    <th>Room Type</th>
+                    <td>{{ room_name }}</td>
+                </tr>
+                <tr>
+                    <th>Check-in</th>
+                    <td>{{ checkin }}</td>
+                </tr>
+                <tr>
+                    <th>Check-out</th>
+                    <td>{{ checkout }}</td>
+                </tr>
+                <tr>
+                    <th>Number of Nights</th>
+                    <td>{{ nights }}</td>
+                </tr>
+                <tr>
+                    <th>Guests</th>
+                    <td>{{ guests }}</td>
+                </tr>
+                <tr>
+                    <th>Rooms Required</th>
+                    <td>{{ rooms_required }}</td>
+                </tr>
+            </table>
+
+            <div class="section-title">Charges To Pay At The Time Of Check-In</div>
+            <table class="charges-table">
+                <tr>
+                    <th>Description</th>
+                    <th>Rate</th>
+                    <th>Quantity</th>
+                    <th>Amount</th>
+                </tr>
+                <tr>
+                    <td>Room Charges</td>
+                    <td>${{ room_rate }}</td>
+                    <td>{{ nights }} Night(s) x {{ rooms_required }} Room(s)</td>
+                    <td>${{ total_amount }}</td>
+                </tr>
+                <tr>
+                    <td>Taxes (18% GST)</td>
+                    <td></td>
+                    <td></td>
+                    <td>${{ taxes }}</td>
+                </tr>
+                <tr class="totals-row grand-total">
+                    <td colspan="3" style="text-align:right;">Grand Total</td>
+                    <td><strong>${{ grand_total }}</strong></td>
+                </tr>
+            </table>
+
+            <div class="hotel-info">
+                <strong>Hotel Policies:</strong><br>
+                &bull; Check-in time: 12:00 PM | Check-out time: 11:00 AM<br>
+                &bull; Early check-in/late check-out subject to availability and extra charges.<br>
+                &bull; All guests must present valid government ID at check-in.<br>
+                &bull; Cancellation policy: Free cancellation up to 24 hours before check-in.<br>
+                &bull; For any queries, contact our front desk at +91-9876543210.
+            </div>
+
+            <div class="footer">
+                Thank you for choosing <strong>Hotel Grand View</strong>!<br>
+                We look forward to hosting you.<br>
+                <span class="signature">This is a computer-generated invoice and does not require a signature.</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

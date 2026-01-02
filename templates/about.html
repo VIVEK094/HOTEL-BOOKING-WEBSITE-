@@ -1,0 +1,210 @@
+{% extends 'base.html' %} 
+{% block title %}ABOUT{% endblock title %}
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About Us | Your Hotel Name</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .banner {
+      width: 100%;
+      height: 600px;
+      background-image: url('https://sgcctech.com/artwork/aboutus.jpg'); 
+      background-size: cover;
+      background-position: center;
+    }
+
+    header {
+      text-align: center;
+      padding: 30px 10px;
+      background-color: #003366;
+      color: white;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+    }
+
+    .container {
+      width: 2000px;
+      margin: 30px auto;
+      padding: 20px;
+      background: rgb(242, 242, 235);
+      border-radius: none;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+    }
+
+    section {
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      color: #003366;
+      margin-bottom: 10px;
+      font-family:times new roman;
+      text-decoration:underline;
+    }
+
+    p {
+      margin-bottom: 15px;
+      font-size: 1.15rem;
+      text-align:auto;
+      padding-left:20px;
+    }
+
+    ul {
+      margin-left: 20px;
+      font-size:20px;
+    }
+
+    .toggle-section {
+      background-color:rgb(210, 226, 251);
+      border-left: 4px solid #003366;
+      padding: 15px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .toggle-section:hover {
+      background-color: #d9eaff;
+    }
+
+    .content {
+      display: none;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f4faff;
+    }
+
+    
+    
+  </style>
+</head>
+<body>
+
+  <div class="banner"></div>
+
+  <header>
+    <h1>About Us</h1>
+    <p>Welcome to Hotel Grand View – Where Hospitality Meets Excellence</p>
+  </header>
+
+  <div class="container">
+    <section>
+      <h2>Our Story</h2>
+      <p>Founded in 2025, Hotel Grand View was born out of a passion for creating a sanctuary where guests could experience unparalleled comfort, luxury, and hospitality. Nestled in the heart of the city, our hotel was designed to be a perfect blend of timeless elegance and modern sophistication.
+
+        From humble beginnings, we started with a vision to redefine the art of hospitality. Over the years, we have grown into a premier destination for travelers from all corners of the globe. Whether you’re visiting for business or leisure, our hotel offers a serene escape from the hustle and bustle of everyday life.
+        
+        Our journey began with a commitment to excellence. Every detail of our hotel, from the architecture to the interiors, was meticulously crafted to provide an unforgettable experience. Our rooms and suites are designed with comfort and style in mind, featuring state-of-the-art amenities and breathtaking views of the city skyline.
+        
+        At Hotel Grand View, we believe that hospitality is more than just providing a place to stay—it’s about creating memories. Our dedicated team of professionals goes above and beyond to ensure that every guest feels valued and cared for. From personalized services to thoughtful gestures, we strive to make every stay extraordinary.
+        
+        Over the years, we have expanded our offerings to include world-class dining, a rejuvenating spa, and versatile event spaces. Our gourmet restaurants serve a variety of cuisines, prepared by some of the finest chefs in the industry. The spa offers a tranquil retreat where guests can relax and recharge, while our event spaces are perfect for hosting weddings, conferences, and celebrations.
+        
+        We are also deeply committed to sustainability and giving back to the community. Our eco-friendly practices and initiatives reflect our dedication to preserving the environment for future generations. From energy-efficient systems to locally sourced ingredients, we take pride in being a responsible and conscious business.
+        
+        As we look to the future, our mission remains the same: to provide an exceptional experience that leaves a lasting impression. We are constantly innovating and evolving to meet the needs of our guests, ensuring that Hotel Grand View continues to be a symbol of excellence in the hospitality industry.
+        
+        Thank you for being a part of our journey. We look forward to welcoming you and making your stay with us truly unforgettable.</p>
+    </section>
+
+    <section>
+      <h2>Why Choose Us?</h2>
+      <ul>
+        <li>✔ Prime Location near top landmarks and attractions</li>
+    <li>✔ Elegant Rooms with modern amenities</li>
+    <li>✔ 24/7 Service from our dedicated hospitality team</li>
+    <li>✔ Sustainable and eco-conscious practices</li>
+    <li>✔ Gourmet Dining and Relaxing Spa Services</li>
+    <li>✔ Personalized Experiences tailored to your preferences</li>
+    <li>✔ High-Speed Wi-Fi and Business Facilities for professionals</li>
+    <li>✔ Family-Friendly Amenities, including kids' play areas and pools</li>
+    <li>✔ Secure Parking and Transportation Assistance</li>
+    <li>✔ Exclusive Offers and Loyalty Rewards for returning guests</li>
+    <li>✔ Commitment to Hygiene and Safety Standards</li>
+    <li>✔ Stunning Views of the city skyline and serene surroundings</li>
+      </ul>
+    </section>
+
+    <div class="toggle-section" onclick="toggleContent('mission')">
+      <strong>📌 Our Mission</strong>
+    </div>
+    <div class="content" id="mission">
+      <p>Our mission is to deliver a memorable and personalized stay to each guest through outstanding service, attention to detail, and a passion for excellence.</p>
+    </div>
+
+    <div class="toggle-section" onclick="toggleContent('vision')">
+      <strong>🔭 Our Vision</strong>
+    </div>
+    <div class="content" id="vision">
+      <p>To become the preferred hotel destination known for timeless charm, innovation, and a home-away-from-home experience.</p>
+    </div>
+    <div class="toggle-section" onclick="toggleContent('values')">
+      <strong>🌟 Our Core Values</strong>
+    </div>
+    <div class="content" id="values">
+      <p>At Hotel Grand View, our core values guide everything we do:</p>
+      <ul>
+        <li><strong>Integrity:</strong> We uphold the highest standards of honesty and ethics in all our interactions.</li>
+        <li><strong>Excellence:</strong> We strive for perfection in every aspect of our service.</li>
+        <li><strong>Innovation:</strong> We embrace creativity and continuously improve to meet the evolving needs of our guests.</li>
+        <li><strong>Empathy:</strong> We treat every guest with care, understanding, and respect.</li>
+        <li><strong>Sustainability:</strong> We are committed to eco-friendly practices and preserving the environment.</li>
+      </ul>
+    </div><div class="toggle-section" onclick="toggleContent('promise')">
+      <strong>🤝 Our Promise</strong>
+    </div>
+    <div class="content" id="promise">
+      <p>We promise to make every stay with us unforgettable by:</p>
+      <ul>
+        <li>Providing exceptional service tailored to your needs.</li>
+        <li>Ensuring a safe, clean, and welcoming environment.</li>
+        <li>Offering luxurious amenities and world-class facilities.</li>
+        <li>Creating lasting memories through personalized experiences.</li>
+      </ul>
+    </div>
+    <div class="toggle-section" onclick="toggleContent('community')">
+  <strong>🌍 Community Engagement</strong>
+</div>
+<div class="content" id="community">
+  <p>We believe in giving back to the community that supports us. Our initiatives include:</p>
+  <ul>
+    <li>Partnering with local businesses to promote sustainable tourism.</li>
+    <li>Supporting charitable organizations and community events.</li>
+    <li>Providing employment opportunities and training for local residents.</li>
+    <li>Using locally sourced ingredients in our restaurants to support farmers and artisans.</li>
+  </ul>
+</div>
+  </div>
+
+  
+
+  <script>
+    function toggleContent(id) {
+      const section = document.getElementById(id);
+      section.style.display = (section.style.display === 'block') ? 'none' : 'block';
+    }
+  </script>
+
+</body>
+</html>
+{% endblock body %}

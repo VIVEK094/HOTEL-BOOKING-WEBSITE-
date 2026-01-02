@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}Availability Results{% endblock title %}
+
+{% block body %}
+<style>
+    /* General Styling for the Page */
+.container {
+    padding: 50px 15px;
+    background-color:rgb(234, 232, 226); /* Light background for the page */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+h1.text-center {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family:calibri ;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2); /* Subtle text shadow */
+    animation: gradient-animation 1s infinite; /* Apply the animation */
+}
+@keyframes gradient-animation {
+    0% {
+        color: red;
+    }
+    50% {
+        color: black;
+    }
+    100% {
+        color: blue;
+    }
+    }
+
+p.text-center {
+    font-size: 1.2rem;
+    color: #555; /* Neutral color for the text */
+    margin-bottom: 40px;
+}
+
+/* Card Styling */
+.card {
+    border: none;
+    border-radius: 0px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for cards */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+.card:hover {
+    transform: translateY(-10px); /* Lift the card on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: none;
+    color: #333; /* Darker color for the card title */
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color:rgb(194, 179, 49); /* Highlight color for the button */
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color:rgb(8, 244, 19); /* Slightly darker highlight on hover */
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h1.text-center {
+        font-size: 2rem; /* Adjust heading size for smaller screens */
+    }
+
+    p.text-center {
+        font-size: 1rem; /* Adjust text size for smaller screens */
+    }
+
+    .card-title {
+        font-size: 1.2rem; /* Adjust card title size for smaller screens */
+    }
+}
+</style>
+<div class="container my-5">
+    <h1 class="text-center">Available Rooms</h1>
+    <p class="text-center">Guests: {{ guests }} | Check-In: {{ checkin }} | Check-Out: {{ checkout }}</p>
+    <div class="row">
+        {% for room in available_rooms %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ room.room_type }}</h5>
+                    <a href="/rooms?room={{ room.room_type }}" class="btn btn-primary">Book Now</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock body %}

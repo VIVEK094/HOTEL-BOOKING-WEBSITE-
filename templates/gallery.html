@@ -1,0 +1,70 @@
+<!-- filepath: c:\Users\VIVEK\env2\hotel\templates\gallery.html -->
+{% extends 'base.html' %}
+
+{% block title %}Gallery - Hotel Grand View{% endblock title %}
+
+{% block body %}
+<style>
+.heading h1{
+    text-align:center;
+    font-family:lucida;
+    font-size:3.5rem;
+    color: rgb(223, 179, 22);
+}
+.heading p{
+    text-align:center;
+    font-size:1.2rem;
+    padding-top:10px;
+}
+.container {
+    display: grid; /* Enables grid layout */
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); /* Responsive grid */
+    gap:50px; /* Adds spacing between images */
+    justify-items: center;
+    
+}
+
+.photo1 {
+    width: 550px; /* Ensures the image fits within the grid cell */
+    height: 400px ; /* Maintains aspect ratio */
+    object-fit: cover; /* Ensures the image fills the grid cell */
+    
+}
+
+</style>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="heading">
+    <h1>__________GALLERY_________</h1>
+    <p>Immerse yourself in the regal pomp of a bygone age, the harmonious precision of the Indo-Saracenic architecture and the visual legacy of kings.</p>
+</div>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+    <img class="photo1" src="https://www.travelplusstyle.com/wp-content/gallery/rambagh-palace-jaipur/hi_h4ej0_27652627_005-rajput-room.jpg">
+    <img class="photo1" src="https://dcvrfpttsu6tk.cloudfront.net/images/hotel/images/2020-04-03-10-34-26-5e87113240ded-Rambagh-Palace-02.jpg">
+    <img class="photo1" src="https://www.carrier.co.uk/media/41ihemed/lobby.jpg?rnd=133332088132030000">
+
+    <img class="photo1" src="https://tse4.mm.bing.net/th/id/OIP.nIZvINyCsi04nGiKdrDlMwHaFS?w=1920&h=1371&rs=1&pid=ImgDetMain&o=7&rm=3">
+    <img class="photo1" src="https://www.rajasthantourplanner.com/blog/wp-content/uploads/2018/03/samode-haveli.jpg">
+    <img class="photo1" src="https://www.ampersandtravel.com/media/484254/Rambagh-Palace-JAIPUR-North-India-16-.jpg?mode=crop">
+
+    <img class="photo1" src="https://tse3.mm.bing.net/th/id/OIP.j2p32Au3o45s8qxp_bcQcAHaFj?w=2560&h=1920&rs=1&pid=ImgDetMain&o=7&rm=3">
+    <img class="photo1" src="https://amusementlogic.ru/wp-content/uploads/2022/11/HOTELES-MUNDO-TAJ-LAKE-PALACE-3.jpg">
+    <img class="photo1" src="https://tse2.mm.bing.net/th/id/OIP.52rc6OEJOT1acSzuMM0aLAHaDt?rs=1&pid=ImgDetMain&o=7&rm=3">
+
+    <img class="photo1" src="https://www.bellsandbows.in/wp-content/uploads/2020/02/1-11-1024x666.jpg">
+    <img class="photo1" src="https://tse1.mm.bing.net/th/id/OIP.0d0p2maWsG7uA1xNhsY4AgHaDL?w=916&h=393&rs=1&pid=ImgDetMain&o=7&rm=3">
+    <img class="photo1" src="https://www.dreammakersevent.com/images/venues/jaipur/taj-rambagh/01.jpg">
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock body %}

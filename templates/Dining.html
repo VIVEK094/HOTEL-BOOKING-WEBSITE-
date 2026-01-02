@@ -1,0 +1,623 @@
+{%extends "base.html"%}
+{% block title %}Dining{% endblock %}
+{% block body %}
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom,rgb(246, 241, 225),rgb(226, 233, 244)); /* Soft gradient from light beige to light blue */
+    background-attachment: fixed; /* Keeps the background fixed while scrolling */
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
+    .screen {
+      position: relative;
+      width: 100%;
+      height: 900px;
+      overflow: hidden;
+    }
+    
+    .video1 {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Ensures the video covers the entire screen */
+      position: absolute; 
+    }
+
+    .heading  h1{
+      text-align: center;
+      font-family: lucida;
+      color:rgb(223, 179, 22);
+      margin-top: 20px;
+      font-size: 3.5rem;
+     
+      
+    }
+    .heading  p{
+      text-align: center;
+      font-family: lucida;
+      margin-top: 10px;
+      font-size: 1.5rem;
+      text-color:black;
+        color:rgb(177, 151, 58);
+    }
+    / * Gourmet Section */
+    
+        /* Gourmet Section Styling */
+    .gourmet-section {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 50px 20px;
+          background-color: #f8f9fa;
+        }
+        
+    .gourmet-box {
+          background-color:rgb(220, 219, 214);
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          padding: 30px;
+          width: 60%;
+          
+          text-align: center;
+          margin: auto;
+        }
+        
+    .gourmet-heading {
+          font-size: 3rem;
+          font-family: times new roman;
+          font-weight:none;
+          color: #343a40;
+          margin-bottom: 20px;
+        }
+        
+    .gourmet-description {
+          font-size: 1.2rem;
+          color: #6c757d;
+          margin-bottom: 20px;
+          line-height: 1.5;
+          text-align:left;
+        }
+        
+    .gourmet-image {
+          width: 100%;
+          height: auto;
+          border-radius: 10px;
+          margin-bottom: 20px;
+        }
+        
+    .gourmet-menu-btn {
+          background-color: #f7c08a;
+          color: #343a40;
+          font-weight: bold;
+          padding: 10px 20px;
+          border-radius: 5px;
+          text-decoration: none;
+          transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+    .gourmet-menu-btn:hover {
+          background-color: #e0a96d;
+          color: #ffffff;
+        }
+
+    .gourmet-timing, .gourmet-cuisine, .dress-code, .gourmet-location, .gourmet-Email, .gourmet-phone {
+          margin: 10px 0;
+          font-size: 1.1rem;
+          color: #343a40;
+        }
+    .gourmet-timing{
+        text-align: left;
+        font family: times new roman;
+        }
+        .gourmet-cuisine{
+        text-align: left;
+        font family: times new roman;
+        }
+    .dress-code{
+        text-align: left;
+        font family: times new roman;
+        }
+        .gourmet-location{
+        text-align: left;
+        font family: times new roman;
+        }
+    .gourmet-Email{
+        text-align: left;
+        font family: times new roman;
+        }
+    .gourmet-phone{
+        text-align: left;
+        font family: times new roman;
+        }
+        
+        
+          /* Reservation Section Styling */
+        .heading-reservation h1{
+            text-align: center;
+            font-family: lucida;
+            color:rgb(223, 179, 22);
+            margin-top: 20px;
+            font-size: 3.5rem;
+        }
+        .heading-reservation p{
+            text-align: center;
+            font-family: lucida;
+            margin-top: 10px;
+            font-size: 1.5rem;
+            text-color:black;
+            color:rgb(177, 151, 58);
+        }
+        .reservation-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 20px;
+            background-color: #f8f9fa;
+          }
+          
+          .reservation-box {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+          }
+          
+          .reservation-heading {
+            font-size: 2rem;
+            font-family: times new roman;
+            font-weight: none;
+            text-animation: none;
+            color: #343a40;
+            margin-bottom: 20px;
+          }
+          
+          .reservation-description {
+            font-size: 1.2rem;
+            color: #6c757d;
+            margin-bottom: 30px;
+          }
+          
+          .reservation-form .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+          }
+          
+          .reservation-form label {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #343a40;
+            margin-bottom: 5px;
+            display: block;
+          }
+          
+          .reservation-form .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 1rem;
+          }
+          
+          .reservation-form .form-control:focus {
+            border-color: #f7c08a;
+            box-shadow: 0 0 5px rgba(247, 192, 138, 0.5);
+          }
+          
+          .reservation-btn {
+            background-color: #f7c08a;
+            color: #343a40;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+          }
+          
+          .reservation-btn:hover {
+            background-color: #e0a96d;
+            color: #ffffff;
+          }
+
+
+        
+        
+        .modal-content {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          }
+          
+          .modal-header {
+            background-color: #f7c08a;
+            color: #343a40;
+            border-bottom: none;
+          }
+          
+          .modal-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+          }
+          
+          .modal-body {
+            padding: 20px;
+            font-size: 1.1rem;
+            color: #6c757d;
+          }
+          
+          .modal-body ul {
+            list-style: none;
+            padding: 0;
+          }
+          
+          .modal-body ul li {
+            margin-bottom: 10px;
+          }
+          
+          .modal-footer .btn {
+            background-color: #f7c08a;
+            color: #343a40;
+            font-weight: bold;
+            border-radius: 5px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+          }
+          
+          .modal-footer .btn:hover {
+            background-color: #e0a96d;
+            color: #ffffff;
+          }  
+          
+          
+          .lightbox {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Black background with opacity */
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .lightbox-image {
+            max-width: 80%;
+            max-height: 80%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        
+        .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2rem;
+            color: #ffffff;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .close-lightbox:hover {
+            color: #f7c08a;
+        }
+        
+        .lightbox-navigation {
+            position: absolute;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .lightbox-navigation .prev,
+        .lightbox-navigation .next {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+            border: none;
+            font-size: 2rem;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .lightbox-navigation .prev:hover,
+        .lightbox-navigation .next:hover {
+            background-color: #f7c08a;
+        }
+</style>
+<body>
+<div class=screen>
+    <video class="video1" autoplay muted loop>
+        <source src="https://cdn.pixabay.com/video/2015/10/27/1192-143842659.mp4?download" type="video/mp4">
+    </video>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container1">
+   <div class="heading"> 
+        <h1>_______________ Welcome To The Dining Section _______________</h1>
+        <p>Explore our menu and discover the perfect dining experience for you!</p>
+   </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="gourmet-section" id="gd">
+        <div class="gourmet-box">
+          <h2 class="gourmet-heading">The Gourmet Dining</h2>
+          <p class="gourmet-description">
+            Welcome to <strong>The Gourmet Dining</strong>, where culinary artistry meets luxury. Indulge in a world-class dining experience with our carefully curated menu, featuring a fusion of global flavors and locally sourced ingredients. Whether you're celebrating a special occasion or simply enjoying a night out, our elegant ambiance and exceptional service will make your visit unforgettable.
+          </p>
+          <img src="https://t3.ftcdn.net/jpg/03/24/73/92/360_F_324739203_keeq8udvv0P2h1MLYJ0GLSlTBagoXS48.jpg" alt="Gourmet Dining" class="gourmet-image">
+          <div class="gourmet-timing">
+            <h3>Dining Hours:</h3>
+            <p>11:00 am to 8:00 pm</p>
+        </div>
+        <div class="gourmet-cuisine">
+            <h3>Cuisine:</h3>
+            <p>MultiCuisine</p>
+        </div>
+        <div class="dress-code">
+            <h3>Dress Code:</h3>
+            <p>Smart Casual</p>
+        </div>
+        <div class="gourmet-location">
+            <h3>Location:</h3>
+            <p>123 Gourmet Street, Foodie City</p>
+            <div class="gourmet-Email">
+                <h3>Email:</h3>
+                <p>gourmet001@gmail.com</p>
+            </div>
+            <div class="gourmet-phone">
+                <h3>Contact us at: </h3>
+                <p>1800-123-8888</p>
+            </div>
+        </div>
+        <a href="javascript:void(0);" class="btn btn-primary gourmet-menu-btn" onclick="openLightbox('gourmet')">View Our Menu</a>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="gourmet-section" id="fq">
+        <div class="gourmet-box">
+          <h2 class="gourmet-heading">The Fifth Quater</h2>
+          <p class="gourmet-description">
+            Welcome to <strong>The Fifth Quater</strong>, where culinary artistry meets luxury. Indulge in a world-class dining experience with our carefully curated menu, featuring a fusion of global flavors and locally sourced ingredients. Whether you're celebrating a special occasion or simply enjoying a night out, our elegant ambiance and exceptional service will make your visit unforgettable.
+          </p>
+          <img src="https://www.foodandwine.com/thmb/8rtGtUmtC0KiJCDxAUXP_cfwgM8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GTM-Best-US-Bars-Katana-Kitten-FT-BLOG0423-fa9f2ba9925c47abb4afb0abd25d915a.jpg" alt="Gourmet Dining" class="gourmet-image">
+            <div class="gourmet-timing">
+                <h3>Dining Hours:</h3>
+                <p>11:00 am to 8:00 pm</p>
+            </div>
+            <div class="gourmet-cuisine">
+                <h3>Cuisine:</h3>
+                <p>Drinks</p>
+            </div>
+            <div class="dress-code">
+                <h3>Dress Code:</h3>
+                <p>Smart Casual</p>
+            </div>
+            <div class="gourmet-location">
+                <h3>Location:</h3>
+                <p>123 Gourmet Street, Foodie City</p>
+                <div class="gourmet-Email">
+                    <h3>Email:</h3>
+                    <p>fifth002quater@gmail.com</p>
+                </div>
+                <div class="gourmet-phone">
+                    <h3>Contact us at: </h3>
+                    <p>1800-123-9999</p>
+                </div>
+            </div>
+            <a href="javascript:void(0);" class="btn btn-primary gourmet-menu-btn" onclick="openLightbox('fifth')">View Our Menu</a>
+        </div>
+    </div>
+  </div>
+  <div id="lightbox" class="lightbox">
+    <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+    <img id="lightboxImage" class="lightbox-image" src="" alt="Menu Image">
+    <div class="lightbox-navigation">
+        <button class="prev" onclick="changeImage(-1)">&#10094;</button>
+        <button class="next" onclick="changeImage(1)">&#10095;</button>
+    </div>
+</div>
+<script>
+  let currentImageIndex = 0;
+  let currentMenu = '';
+  const menus = {
+      gourmet: [
+          "https://sdmntprwestus2.oaiusercontent.com/files/00000000-2d4c-61f8-bda5-75480ebdbbad/raw?se=2025-04-27T11%3A49%3A23Z&sp=r&sv=2024-08-04&sr=b&scid=dc692d16-cc98-59c3-bdd7-2f076fe3b63d&skoid=a47cd303-16a2-427e-8efb-2ce406116005&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-26T19%3A18%3A44Z&ske=2025-04-27T19%3A18%3A44Z&sks=b&skv=2024-08-04&sig=SBhABdyuSnK%2BFjdS54Y7izNEMJ0R/dwzo2RyUohiJYM%3D",
+          "https://sdmntprwestus2.oaiusercontent.com/files/00000000-42e0-61f8-9767-3ce68f4e01c8/raw?se=2025-04-27T11%3A49%3A23Z&sp=r&sv=2024-08-04&sr=b&scid=685da8d1-fb3a-5097-a322-bb34e48c0e79&skoid=a47cd303-16a2-427e-8efb-2ce406116005&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-26T23%3A27%3A08Z&ske=2025-04-27T23%3A27%3A08Z&sks=b&skv=2024-08-04&sig=tkmAmS2f2pQcfD4Fxrz7M/OR2xueemZfRmSxG8H9vzI%3D",
+          "https://sdmntpreastus2.oaiusercontent.com/files/00000000-dde0-61f6-8dd5-f79444d0ddea/raw?se=2025-04-27T11%3A52%3A13Z&sp=r&sv=2024-08-04&sr=b&scid=87f56db5-12c2-56be-8145-1d22d80b4d1e&skoid=a47cd303-16a2-427e-8efb-2ce406116005&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-27T10%3A49%3A33Z&ske=2025-04-28T10%3A49%3A33Z&sks=b&skv=2024-08-04&sig=THSFVHsD9WgOzsl1usTUbPJ2KOrc5AH7BSbmB2PPx%2Bw%3D",
+          "https://sdmntprwestus2.oaiusercontent.com/files/00000000-cac8-61f8-a74a-b69951fe2203/raw?se=2025-04-27T11%3A49%3A23Z&sp=r&sv=2024-08-04&sr=b&scid=dce7b6cd-ace7-5843-ae01-64d8f7161571&skoid=a47cd303-16a2-427e-8efb-2ce406116005&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-26T22%3A04%3A58Z&ske=2025-04-27T22%3A04%3A58Z&sks=b&skv=2024-08-04&sig=zv5Ph5hKQxVak/n%2BSvga0xv01EyZHrAH3ERhnv9cYwE%3D"
+          
+      ],
+      fifth: [
+          "https://sdmntprwestus2.oaiusercontent.com/files/00000000-b1d0-61f8-8370-553690350dcf/raw?se=2025-04-27T11%3A50%3A34Z&sp=r&sv=2024-08-04&sr=b&scid=49fca522-dfad-5c71-805b-5d23c8358ee9&skoid=a47cd303-16a2-427e-8efb-2ce406116005&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-26T18%3A56%3A11Z&ske=2025-04-27T18%3A56%3A11Z&sks=b&skv=2024-08-04&sig=qj75oh/kI/GYkJx1OG5SZZTeo55O%2BSrcBotTUjzXF7A%3D",
+          "https://sdmntpreastus2.oaiusercontent.com/files/00000000-3614-61f6-801d-40fc147350a3/raw?se=2025-04-27T11%3A53%3A19Z&sp=r&sv=2024-08-04&sr=b&scid=bff629bc-01b2-5afd-ba07-e90ae4893804&skoid=a47cd303-16a2-427e-8efb-2ce406116005&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-26T22%3A07%3A03Z&ske=2025-04-27T22%3A07%3A03Z&sks=b&skv=2024-08-04&sig=JHMDwDqDXbW%2BbZdT5YiXSVMOvhgAFA16nd2v89fZY2w%3D",
+          "https://sdmntpreastus2.oaiusercontent.com/files/00000000-50e8-61f6-bc81-bf4f63d37dd9/raw?se=2025-04-27T11%3A55%3A27Z&sp=r&sv=2024-08-04&sr=b&scid=5e08c4f5-f70f-53b7-b51d-eedfc0ff10cb&skoid=a47cd303-16a2-427e-8efb-2ce406116005&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-27T01%3A26%3A46Z&ske=2025-04-28T01%3A26%3A46Z&sks=b&skv=2024-08-04&sig=19jULD6B5GAt721IU9%2BECaCUIhuE6rcYM3l3lMza0Q8%3D"
+      ]
+  };
+  
+  function openLightbox(menu) {
+      currentMenu = menu;
+      currentImageIndex = 0;
+      document.getElementById("lightboxImage").src = menus[currentMenu][currentImageIndex];
+      document.getElementById("lightbox").style.display = "flex";
+  }
+  
+  function closeLightbox() {
+      document.getElementById("lightbox").style.display = "none";
+  }
+  
+  function changeImage(direction) {
+      currentImageIndex += direction;
+      if (currentImageIndex < 0) {
+          currentImageIndex = menus[currentMenu].length - 1; // Loop to the last image
+      } else if (currentImageIndex >= menus[currentMenu].length) {
+          currentImageIndex = 0; // Loop to the first image
+      }
+      document.getElementById("lightboxImage").src = menus[currentMenu][currentImageIndex];
+  }
+</script>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    
+    <div class=heading-reservation>
+        <h1>_______________ Reserve Your Table At _______________</h1>
+        <p>Book your table at our gourmet restaurant and enjoy an unforgettable dining experience.</p>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>  
+    <div class="reservation-section">
+        <div class="reservation-box">
+          <h1 class="reservation-heading">The Gourmet Dining</h1>
+          <form action="/reserve" method="POST" class="reservation-form">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="name" class="form-control" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" class="form-control" placeholder="Enter your phone number" required>
+            </div>
+            <div class="form-group">
+              <label for="date">Reservation Date</label>
+              <input type="date" id="date" name="date" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="time">Reservation Time</label>
+              <input type="time" id="time" name="time" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="guests">Number of Guests</label>
+              <input type="number" id="guests" name="guests" class="form-control" placeholder="Enter number of guests" min="1" required>
+            </div>
+            <div class="form-group">
+              <label for="specialRequests">Special Requests</label>
+              <textarea id="specialRequests" name="specialRequests" class="form-control" rows="3" placeholder="Enter any special requests"></textarea>
+            </div>
+            <button type="button" class="btn btn-primary reservation-btn" data-bs-toggle="modal" data-bs-target="#reservationConfirmationModal" disabled>
+              Reserve Now
+          </button>
+          </form>
+        </div>
+    </div>
+  <!-- Reservation Confirmation Modal -->
+  <div class="modal fade" id="reservationConfirmationModal" tabindex="-1" aria-labelledby="reservationConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reservationConfirmationModalLabel">Reservation Confirmed</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Your table has been successfully reserved! We look forward to serving you.</p>
+                <p><strong>Reservation Details:</strong></p>
+                <ul>
+                    <li><strong>Name:</strong> <span id="modalName"></span></li>
+                    <li><strong>Email:</strong> <span id="modalEmail"></span></li>
+                    <li><strong>Phone:</strong> <span id="modalPhone"></span></li>
+                    <li><strong>Date:</strong> <span id="modalDate"></span></li>
+                    <li><strong>Time:</strong> <span id="modalTime"></span></li>
+                    <li><strong>Guests:</strong> <span id="modalGuests"></span></li>
+                    <li><strong>Special Requests:</strong> <span id="modalRequests"></span></li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+  document.querySelector('.reservation-btn').addEventListener('click', function () {
+      // Get form values
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
+      const guests = document.getElementById('guests').value;
+      const specialRequests = document.getElementById('specialRequests').value || 'None';
+
+      // Populate modal fields
+      document.getElementById('modalName').textContent = name;
+      document.getElementById('modalEmail').textContent = email;
+      document.getElementById('modalPhone').textContent = phone;
+      document.getElementById('modalDate').textContent = date;
+      document.getElementById('modalTime').textContent = time;
+      document.getElementById('modalGuests').textContent = guests;
+      document.getElementById('modalRequests').textContent = specialRequests;
+  })
+    // Function to check if all required fields are filled
+    function validateForm() {
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const date = document.getElementById('date').value.trim();
+        const time = document.getElementById('time').value.trim();
+        const guests = document.getElementById('guests').value.trim();
+
+        // Check if all fields are filled
+        const isFormValid = name && email && phone && date && time && guests;
+
+        // Enable or disable the button based on form validity
+        document.querySelector('.reservation-btn').disabled = !isFormValid;
+    }
+
+    // Add event listeners to all required fields
+    document.querySelectorAll('#name, #email, #phone, #date, #time, #guests').forEach(field => {
+        field.addEventListener('input', validateForm); // Call validateForm on input change
+    });
+</script>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    
+</div>
+</body>
+{%endblock%}

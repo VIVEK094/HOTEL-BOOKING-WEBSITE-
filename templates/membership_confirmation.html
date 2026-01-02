@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% block title %}Booking Confirmation{% endblock title %}
+{% block body %}
+<style>
+     body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        {% comment %} background-image: url('https://wallpapers.com/images/hd/stonehenge-world-heritage-site-in-england-xisl449b5rmbw1w3.jpg');  {% endcomment %}
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    } 
+    .confirmation-container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 30px;
+        background-color:rgba(250, 253, 253, 0.5);
+        border-radius: 0px;
+        border: 1px dashed black;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .confirmation-container h2 {
+        text-align: center;
+        font-size: 2.5rem;
+        color:rgb(0, 4, 8);
+        margin-bottom: 20px;
+    }
+
+    .confirmation-container p {
+        font-size: 1.2rem;
+        color:rgb(0, 3, 6);
+        margin-bottom: 10px;
+        text-align:Left;
+    }
+
+    .price-breakup {
+        margin-top: 30px;
+        padding: 20px;
+        background-color:rgba(250, 253, 253, 0.7);
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .price-breakup h3 {
+        font-size: 1.8rem;
+        color:rgb(0, 4, 8);
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .price-breakup table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .price-breakup table th,
+    .price-breakup table td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .price-breakup table th {
+        background-color: #f1f1f1;
+        color:rgb(0, 4, 8);
+    }
+
+    .price-breakup table td:last-child {
+        text-align: right;
+    }
+
+    .btn-animated {
+    background: linear-gradient(270deg, #f7c08a, #ff6f91, #6a82fb, #f7c08a);
+    background-size: 600% 600%;
+    color: #222 !important;
+    border: none;
+    font-weight: bold;
+    border-radius: 30px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: gradient-move 3s ease infinite;
+    padding: 12px 0;
+    width: 100%;
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+}
+
+.btn-animated:hover {
+    transform: scale(1.06);
+    color: #fff !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+}
+
+@keyframes gradient-move {
+    0% {background-position:0% 50%;}
+    50% {background-position:100% 50%;}
+    100% {background-position:0% 50%;}
+}
+</style>
+
+<div class="confirmation-container">
+    <h2>Booking Confirmation</h2>
+    <br>
+    <p><strong>Name:</strong> {{ name }}</p>
+    <p><strong>Email:</strong> {{ email }}</p>
+    <p><strong>Phone:</strong> {{ phone }}</p>
+    <p><strong>Date:</strong> {{ date }}</p>
+    <p><strong>Plan rate:</strong> ${{ plan_rate }}</p>
+    <div class="price-breakup">
+        <h3>Price Breakup</h3>
+        <table>
+            <tr>
+                <th>Description</th>
+                <th>Amount</th>
+            </tr>
+            <tr>
+                <td>Plan Rate</td>
+                <td>${{ total_amount }}</td>
+            </tr>
+            <tr>
+                <td>Taxes & Fees (18%)</td>
+                <td>${{ taxes }}</td>
+            </tr>
+            <tr>
+                <th>Grand Total</th>
+                <th>${{ grand_total }}</th>
+            </tr>
+        </table>
+        
+    </div>
+
+    <!-- Redirect to payment page with booking details -->
+    <form method="GET" action="{% url 'membership_payment_page' %}">
+        {% csrf_token %}
+        <input type="hidden" name="name" value="{{ name }}">
+        <input type="hidden" name="email" value="{{ email }}">
+        <input type="hidden" name="phone" value="{{ phone }}">
+        <input type="hidden" name="date" value="{{ phone }}"
+        <input type="hidden" name="total_amount" value="{{ total_amount }}">
+        <input type="hidden" name="taxes" value="{{ taxes }}">
+        <input type="hidden" name="grand_total" value="{{ grand_total }}">
+        <input type="hidden" name="plan_name" value="{{ plan_name }}">
+        <input type="hidden" name="plan_rate" value="{{ plan_rate }}">
+        <br>
+        <a href="{% url 'membership_payment_page' %}?name={{ name }}&email={{ email }}&phone={{ phone }}&date={{ date }}&plan_name={{ plan_name }}&plan_rate={{ plan_rate }}&total_amount={{ plan_rate }}&taxes={{ taxes }}&grand_total={{ grand_total }}" class="btn btn-animated">Proceed to Payment</a>
+
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,894 @@
+{% extends "base.html" %} 
+{%block title %}Hotel Management System{% endblock title %} 
+{% block body %}
+<style>
+  .carousel-item {
+    transition: transform 2s linear;
+  }
+  .carousel-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+    color: #fff;
+    text-align: center;
+    z-index: 2;
+    padding: 20px;
+  }
+  
+  .carousel-overlay h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+    margin-bottom: 1rem;
+  }
+  
+  .carousel-overlay p {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+  }
+  
+  .explore-btn {
+    background-color: #f7c08a;
+    color: #343a40;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .explore-btn:hover {
+    background-color: #e0a96d;
+    color: #fff;
+    transform: scale(1.05);
+  }
+  .availability-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(232, 222, 205, 0.8); /* Semi-transparent background */
+    backdrop-filter: blur(10px); /* Glassy effect */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin: 0px auto;
+}
+
+.availability-form {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.form-group label {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #343a40;
+}
+
+.form-control {
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.form-control:focus {
+    border-color: #f7c08a;
+    box-shadow: 0 0 5px rgba(247, 192, 138, 0.5);
+}
+
+.availability-btn {
+    background-color: #f7c08a;
+    color: #343a40;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.availability-btn:hover {
+    background-color: #e0a96d;
+    transform: scale(1.05);
+    color: #fff;
+}
+  .card-container {
+    display: flex; /* Align items inline */
+    flex-wrap: wrap; /* Allow wrapping if there are too many cards */
+    justify-content: center; /* Center the cards horizontally */
+    gap: 20px; /* Add spacing between cards */
+    margin: 20px auto; /* Center the container */
+  }
+    .card {
+      width: 15rem;
+      margin: 30px;
+      display: flex;
+      flex-direction: column;
+      border -radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+      scroll-behavior:smooth;
+
+    }
+    .card1 {
+      width: 15rem;
+      margin: 200px;
+      display: inline-block;
+    }
+    .feedback-slider {
+      overflow: hidden;
+      position: relative;
+    height: 400px; /* Adjust based on your content */
+    width: 1000px;
+    margin: 0 auto;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+  }
+
+  .feedback-track {
+    display: flex;
+    flex-direction: column;
+    animation: scrollFeedback 10s linear infinite; 
+  }
+
+  .feedback-item {
+    text-align: center;
+    padding: 10px 0;
+    font-style: italic;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .feedback-item:last-child {
+    border-bottom: none;
+  }
+
+  @keyframes scrollFeedback {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-100%);
+    }
+  }
+  
+  /* Membership Corner Section */
+.top{
+
+}  
+.membership-corner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to right,rgb(69, 84, 242), #2e2e2e);
+  color: #fff;
+  padding: 30px 10%;
+  border-radius: 20px;
+  margin: 60px 0;
+  width: 80%;
+  margin: auto;
+}
+
+.membership-content {
+  flex: 1 1 50%;
+  padding-right: 40px;
+}
+
+.membership-content h2 {
+  font-size: 2.5em;
+  color: #f7c08a;
+  margin-bottom: 15px;
+}
+
+.membership-content p {
+  font-size: 1.1em;
+  margin-bottom: 20px;
+}
+
+.membership-content ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 25px;
+}
+
+.membership-content ul li {
+  margin-bottom: 10px;
+  font-size: 1em;
+}
+
+.join-btn {
+  display: inline-block;
+  background-color: #f7c08a;
+  color: #1a1a1a;
+  padding: 12px 24px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.join-btn:hover {
+  background-color: #e0a96d;
+}
+
+.membership-image {
+  flex: 1 1 40%;
+  text-align: center;
+}
+
+.membership-image img {
+  max-width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 50px rgba(222, 12, 12, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .membership-corner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .membership-content {
+    padding: 0;
+  }
+
+  .membership-image {
+    margin-top: 30px;
+  }
+}
+/* Deals Carousel Section */
+{% comment %} .top1{
+  height: 600px;
+  background-color:rgba(223, 221, 218, 1);
+} {% endcomment %}
+.wrapper1 {
+    width: 1500px;
+    height: 700px;
+    background-color:rgba(223, 221, 218, 1);
+    margin: auto;
+    position: relative;
+    user-select: none;
+    
+}
+.carousel1 {  
+    width:100%;
+    height: 800px;
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 0px;
+    padding: 0px 0;
+    scrollbar-width: none; /* Firefox */
+}
+.carousel1::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
+.card1 {
+    width: 900px;
+    height:600px;
+    background: #f4e5cbff;
+    border-radius: 0px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    padding: 40px;
+    text-align: center;
+    transition: transform 0.2s;
+    cursor: grab;
+}
+.card1:active {
+    cursor: grabbing;
+    transform: scale(0.97);
+}
+.img1 img {
+    width: 800px;
+    height: 500px;
+    object-fit: cover;
+    border-radius: none;
+    margin-bottom: 10px;
+}
+#left, #right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    background:rgba(236, 225, 217, 0.97);
+    color: #060000ff;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    user-select: none;
+}
+#left { left: -100px; }
+#right { right: -100px; }
+@media (max-width: 600px) {
+    .wrapper { max-width: 100%; }
+    .card { min-width: 180px; }
+    #left, #right { display: none; }
+}
+  /* Food Section */
+  .food-header{
+    text-align: center;
+    font-family: times new roman;
+  }
+  .foodsection {
+    background-color: #f8f9fa;
+    padding: 50px 10%;
+    margin:auto;
+    text-align: center;
+    font-family: times new roman;
+    
+  }
+
+  .foodsection h2 {
+    font-size: 2.5em;
+    color:rgb(245, 233, 6);
+    margin-right: auto;
+    text-align: center;
+    font-family: times new roman;
+  }
+
+  .foodsection p {
+    font-size: 1.2em;
+    color: #555;
+    margin:auto;
+    text-align: center; 
+
+  }
+
+  .food1, .food2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    {% comment %} margin-bottom: 40px; {% endcomment %}
+    background-color: rgba(204, 235, 239, 0.8);
+    border-radius: none;
+    box-shadow: 0 4px 8px rgba(250, 243, 243, 0.1);
+    overflow: hidden;
+    width: 60%;
+    margin: auto;
+  }
+
+  .food-image {
+    width: 40%;
+    height: 50%;
+    object-fit: cruise;
+    border-radius: 5px;
+    margin: 20px;
+    border-radius:5px;
+  }
+
+  .food-description {
+    padding: 20px;
+    text-align: left;
+    width: 50%;
+    margin:auto;
+
+  }
+
+  .food-description h3 {
+    font-size: 1.8em;
+    color:rgb(20, 238, 100);
+    margin-bottom: 10px;
+  }
+
+  .food-description p {
+    font-size: 1em;
+    color: #555;
+    margin-bottom: 15px;
+    line-height: 1.6;
+  }
+
+  .food-description .btn {
+    background-color:rgb(187, 225, 17);
+    color: #1a1a1a;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s;
+  }
+
+  .food-description .btn:hover {
+    background-color:rgb(13, 231, 42);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .food1, .food2 {
+      flex-direction: column;
+    }
+
+    .food-image {
+      width: 100%;
+    }
+
+    .food-description {
+      width: 100%;
+      text-align: center;
+    }
+  }
+  /* Video  event Carousel Section */
+  .carousel {
+    margin: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+    width: 90%;
+  }
+
+  .carousel-item img {
+    height: 85vh;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+  }
+
+  .carousel-item:hover img {
+    transform: scale(1.03);
+  }
+
+  .carousel-caption {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    border-radius: 15px;
+    backdrop-filter: blur(1px);
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .carousel-caption h5 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+    margin-bottom: 1rem;
+    color: #fff;
+  }
+
+  .carousel-caption p {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: #e0e0e0;
+  }
+
+  .carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #fff;
+    opacity: 0.6;
+    transition: 0.3s;
+  }
+
+  .carousel-indicators .active {
+    opacity: 1;
+    background-color: #f8d100;
+  }
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    padding: 10px;
+  }
+
+  @media (max-width: 768px) {
+    .carousel-caption {
+      padding: 1rem;
+    }
+
+    .carousel-caption h5 {
+      font-size: 1.8rem;
+    }
+
+    .carousel-caption p {
+      font-size: 1rem;
+    }
+  } 
+   room available
+   {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+</style>
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" style="width:100%">
+  <div class="carousel-inner">
+    <!-- Slide 1 -->
+    <div class="carousel-item active" data-bs-interval="3000">
+      <img src="https://leonardo.sk/wp-content/uploads/2020/05/TAJ-RAMBAGH-PALACE-JAIPUR-11-1100x733.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-overlay">
+        <h1>Welcome to Grand View Hotel</h1>
+        <p>Experience luxury, comfort, and world-class service at our premium hotel.</p>
+        <a href="/rooms" class="btn btn-primary explore-btn">Explore</a>
+      </div>
+    </div>
+    <!-- Slide 2 -->
+    <div class="carousel-item" data-bs-interval="3000">
+      <img src="https://www.travelplusstyle.com/wp-content/gallery/rambagh-palace-jaipur/hi_h4ej0_67917598_rambagh_palace_-_exterior_6.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-overlay">
+        <h1>Discover Our Luxurious Suites</h1>
+        <p>Indulge in the ultimate comfort and elegance during your stay.</p>
+        <a href="/rooms" class="btn btn-primary explore-btn">Explore</a>
+      </div>
+    </div>
+    <!-- Slide 3 -->
+    <div class="carousel-item" data-bs-interval="3000">
+      <img src="https://i.pinimg.com/736x/70/ba/b1/70bab12ae9110243ac3f0e16ba3b6a51--rajasthan-india-palaces.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-overlay">
+        <h1>Exclusive Deals & Offers</h1>
+        <p>Book now and enjoy special discounts on your stay.</p>
+        <a href="/deals" class="btn btn-primary explore-btn">Explore</a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="availability-bar">
+  <form action="{% url 'check_availability' %}" method="GET" class="availability-form">
+      <div class="form-group">
+          <label for="guests">Guests</label>
+          <input type="number" id="guests" name="guests" class="form-control" placeholder="No. of Guests" min="1" required>
+      </div>
+      <div class="form-group">
+          <label for="checkin">Check-In</label>
+          <input type="date" id="checkin" name="checkin" class="form-control" required>
+      </div>
+      <div class="form-group">
+          <label for="checkout">Check-Out</label>
+          <input type="date" id="checkout" name="checkout" class="form-control" required>
+      </div>
+      <button type="submit" href="/check_availability" class="btn btn-primary availability-btn">Check Availability</button>
+  </form>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+  <div class="container">
+    <h1 class="text-center" style="font-family:lucida; font-size:3.5rem; color:rgb(223, 179, 22);">__________Rooms For Stay__________</h1>
+    <p class="text-center" style="font-size:1.2rem;">Explore our luxurious rooms and suites designed for your comfort.</p>  
+  </div>
+  <br>
+  <div class="card-container">
+  <div class="card" style="width: 18rem;">
+    <img src="https://expressinnindia.com/wp-content/uploads/2022/08/ENCLAVE-SUITE-1-scaled.jpg" class="card-img-top" alt="Room Image">
+    <div class="card-body">
+        <h5 class="card-title">Presidential Suite</h5>
+        <p class="card-text">A luxurious room with all modern amenities.</p>
+        <p class="card-text">Rating: ⭐⭐⭐⭐☆ (4.5/5)</p>
+        <a href="/rooms#ps" class="btn btn-secondary">Explore</a>
+        
+    </div>
+  </div>
+  <div class="card" style="width: 18rem;">
+    <img src="https://media.cnn.com/api/v1/images/stellar/prod/140127103345-peninsula-shanghai-deluxe-mock-up.jpg?q=w_2226,h_1449,x_0,y_0,c_fill" class="card-img-top" alt="Room Image">
+    <div class="card-body">
+        <h5 class="card-title">Royal Suite </h5>
+        <p class="card-text">A luxurious room with all modern amenities.</p>
+        <p class="card-text">Rating: ⭐⭐⭐⭐☆ (4.5/5)</p>
+        <a href="/rooms#rs" class="btn btn-secondary">Explore</a>
+        
+    </div>
+</div>
+  <div class="card" style="width: 18rem;">
+    <img src="https://cache.marriott.com/marriottassets/marriott/LASJW/lasjw-suite-0084-hor-clsc.jpg?interpolation=progressive-bilinear&" class="card-img-top" alt="Room Image">
+    <div class="card-body">
+        <h5 class="card-title">Suite</h5>
+        <p class="card-text">A luxurious room with all modern amenities.</p>
+        <p class="card-text">Rating: ⭐⭐⭐⭐☆ (4.5/5)</p>
+        <a href="/rooms#s" class="btn btn-secondary">Explore</a>
+        
+    </div>
+</div>
+<div class="card" style="width: 18rem;">
+  <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/515205143.jpg?k=94e12cd867bfb1a4a60e510160e808b518201cafb8ef3f7f4f336901b71387c9&o=&hp=1" class="card-img-top" alt="Room Image">
+  <div class="card-body">
+      <h5 class="card-title">Junior Suite</h5>
+      <p class="card-text">A luxurious room with all modern amenities.</p>
+      <p class="card-text">Rating: ⭐⭐⭐⭐☆ (4.5/5)</p>
+      <a href="/rooms#js" class="btn btn-secondary">Explore</a>
+      
+  </div>
+</div> 
+<div class="card" style="width: 18rem;">
+    <img src="https://www.pymnts.com/wp-content/uploads/2016/05/Hotel-Room-Secondary-Market.jpg" class="card-img-top" alt="Room Image">
+    <div class="card-body">
+        <h5 class="card-title">Deluxe Room</h5>
+        <p class="card-text">A luxurious room with all modern amenities.</p>
+        <p class="card-text">Rating: ⭐⭐⭐⭐☆ (4.5/5)</p>
+        <a href="/rooms#dr" class="btn btn-secondary">Explore</a>
+        
+    </div>
+</div>
+</div>
+<br><br><br><br><br>
+<div style="background-color:rgb(241, 241, 231)">
+<br>  
+<div class="container my-5">
+  <h2 class="text-center" style="font-family:lucida; font-size:3.5rem; color:rgb(223, 179, 22);">__________Customer Feedbacks__________</h2>
+  <p class="text-center" style="font-size:1.2rem;">See what our customers have to say about their stay!</p>
+  <br><br>
+  <div class="feedback-slider">
+    <div class="feedback-track">
+      <div class="feedback-item">
+        <p class="card-text">"The Royal Suite was absolutely amazing! The service was top-notch, and the staff was very friendly."</p>
+        <h5 class="card-title">- John Doe</h5>
+        <p class="card-text">⭐⭐⭐⭐⭐</p>
+      </div>
+      <div class="feedback-item">
+        <p class="card-text">"I loved the family package. The complimentary breakfast was delicious, and the kids had a great time."</p>
+        <h5 class="card-title">- Jane Smith</h5>
+        <p class="card-text">⭐⭐⭐⭐☆</p>
+      </div>
+      <div class="feedback-item">
+        <p class="card-text">"The honeymoon special was perfect! The romantic dinner and spa were unforgettable."</p>
+        <h5 class="card-title">- Emily Johnson</h5>
+        <p class="card-text">⭐⭐⭐⭐⭐</p>
+      </div>
+      <div class="feedback-item">
+        <p class="card-text">"The Deluxe Room was very comfortable, and the view from the balcony was breathtaking."</p>
+        <h5 class="card-title">- Michael Brown</h5>
+        <p class="card-text">⭐⭐⭐⭐⭐</p>
+      </div>
+      <div class="feedback-item">
+        <p class="card-text">"The staff was very accommodating, and the food was excellent. Highly recommend this hotel!"</p>
+        <h5 class="card-title">- Sarah Wilson</h5>
+        <p class="card-text">⭐⭐⭐⭐⭐</p>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+</div>
+<br><br><br><br><br><br><br><br><br>
+<!-- Deals & Offers Section -->
+<!-- Deals Carousel Section -->
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, 
+                                   initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/script.js" defer></script>
+    <link rel="stylesheet" href=
+"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</head>
+
+ 
+    
+    <div class="wrapper1">
+        <i id="left" class="fa-solid  fas fa-angle-left"></i>
+        <ul class="carousel1">
+            <li class="card1">
+                <div class="img1"><img src="https://www.shutterstock.com/shutterstock/photos/2531325161/display_1500/stock-photo-electronic-card-key-for-open-door-in-hotel-smart-card-key-to-lock-and-unlock-door-security-2531325161.jpg" alt="" draggable="false"> </div>
+                <h3 style="color: brown; font-weight:NONE; font-family:timesnewroman;">COMPLEMENTARY ACCESS TO HOTEL FACILTIES</h3>
+            </li>
+            <li class="card1">
+                <div class="img1"><img src="https://www.shutterstock.com/shutterstock/photos/2474555939/display_1500/stock-photo-business-people-talking-meeting-in-hotel-lobby-2474555939.jpg" alt="" draggable="false"> </div>
+                <h3 style="color: brown; font-family:timesnewroman; font-weight:none;">BUSINESS CENTERS & LOUNGE ACCESS</h3>
+                
+            </li>
+            <li class="card1">
+                <div class="img1"><img src="https://www.shutterstock.com/shutterstock/photos/2614239993/display_1500/stock-photo-reserved-vip-sign-on-the-table-at-event-at-hotel-2614239993.jpg" alt="" draggable="false"> </div>
+                <h3 style="color: brown; font-family:timesnewroman; font-weight:none;">INVITAION TO EXCLUSIVE EVENTS</h3>
+                
+            </li>
+            <li class="card1">
+                <div class="img1"><img src="https://www.shutterstock.com/shutterstock/photos/2404623759/display_1500/stock-photo-close-up-of-african-american-hotel-visitor-using-smartphone-banking-app-to-buy-holiday-package-deal-2404623759.jpg"alt="" draggable="false"> </div>
+                <h3 style="color: brown; font-family:timesnewroman; font-weight:none;">COMPLEMENTARY ROOM UPGRADES</h3>
+                
+            </li>
+        </ul>
+        <i id="right" class="fa-solid fas fa-angle-right"></i>
+    </div> 
+
+
+<script>
+const carousel1 = document.querySelector('.carousel1');
+const leftArrow = document.getElementById('left');
+const rightArrow = document.getElementById('right');
+
+let isDown = false;
+let startX;
+let scrollLeft;
+
+carousel1.addEventListener('mousedown', (e) => {
+    isDown = false;
+    carousel1.classList.add('active');
+    startX = e.pageX - carousel.offsetLeft;
+    scrollLeft = carousel.scrollLeft;
+});
+carousel1.addEventListener('mouseleave', () => {
+    isDown = false;
+    carousel1.classList.remove('active');
+});
+carousel1.addEventListener('mouseup', () => {
+    isDown = false;
+    carousel.classList.remove('active');
+});
+carousel1.addEventListener('mousemove', (e) => {
+    if(!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - carousel.offsetLeft;
+    const walk = (x - startX) * 2; //scroll-fast
+    carousel.scrollLeft = scrollLeft - walk;
+});
+
+// Touch support for mobile
+carousel1.addEventListener('touchstart', (e) => {
+    isDown = true;
+    startX = e.touches[0].pageX - carousel.offsetLeft;
+    scrollLeft = carousel.scrollLeft;
+});
+carousel1.addEventListener('touchend', () => {
+    isDown = false;
+});
+carousel1.addEventListener('touchmove', (e) => {
+    if(!isDown) return;
+    const x = e.touches[0].pageX - carousel.offsetLeft;
+    const walk = (x - startX) * 2;
+    carousel1.scrollLeft = scrollLeft - walk;
+});
+
+// Arrow navigation
+leftArrow.onclick = () => carousel1.scrollBy({left: -700, behavior: 'smooth'});
+rightArrow.onclick = () => carousel1.scrollBy({left: 700, behavior: 'smooth'});
+</script>
+
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<!-- Food Section -->
+<div style="background-color:rgb(244, 242, 232)">
+<br>
+<div class "foodsection">
+  <div class="food-header">
+  <h2 style="font-family:lucida; font-size:3.5rem; color:rgb(223, 179, 22);">__________Our Culinary Delights__________</h2>
+  <p style="font-size:1.2rem;">Indulge in a gastronomic journey with our exquisite dining options.</p> 
+  </div> 
+  <br>
+  <br>
+  <div class="food1">
+    <image src="https://t3.ftcdn.net/jpg/03/24/73/92/360_F_324739203_keeq8udvv0P2h1MLYJ0GLSlTBagoXS48.jpg" alt="Food Image" class="food-image">
+    <div class="food-description">
+      <h3>Gourmet Dining</h3>
+      <p>Embark on a culinary adventure with our world-class chefs, offering a fusion of flavors from around the globe. Perfect for food connoisseurs seeking an unforgettable dining experience.</p>
+      <p>Rating: ⭐⭐⭐⭐⭐ (5/5)</p>
+      <a href="/Dining#gd" class="btn btn-secondary">Explore</a>
+    </div>
+  </div>
+  <br>
+  <div class="food2">
+    <image src="https://www.foodandwine.com/thmb/8rtGtUmtC0KiJCDxAUXP_cfwgM8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GTM-Best-US-Bars-Katana-Kitten-FT-BLOG0423-fa9f2ba9925c47abb4afb0abd25d915a.jpg" alt="Food Image" class="food-image">
+    <div class="food-description">
+      <h3>The Fifth Quater</h3>
+      <p>Unwind at our exclusive bar, featuring a curated selection of fine wines, craft cocktails, and premium spirits. The perfect spot to relax and socialize in style.</p>
+      <p>Rating: ⭐⭐⭐⭐⭐ (5/5)</p>
+      <a href="/Dining#fq"  class="btn btn-secondary">Explore</a>
+    </div>
+  </div>
+</div>
+<br><br>
+<br><br>
+</div>
+<br><br><br><br><br>
+
+<!-- Event Section -->
+<div class="container my-5">
+  <h2 class="text-center" style="font-family:lucida; font-size:3.5rem; color:rgb(223, 179, 22);">________Host Your Events with Us________</h2>
+  <p class="text-center" style="font-size:1.2rem;" >From weddings to corporate events, we have the perfect venue for you!</p>
+  <p class="text-center"  style="font-size:1.2rem;">Our event spaces are designed to accommodate all types of gatherings, ensuring a memorable experience for you and your guests.</p>
+</div>
+<br>
+<div id="eventCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#eventCarousel" data-bs-slide-to="0" class="active"></button>
+    <button type="button" data-bs-target="#eventCarousel" data-bs-slide-to="1"></button>
+    <button type="button" data-bs-target="#eventCarousel" data-bs-slide-to="2"></button>
+  </div>
+
+  <div class="carousel-inner">
+
+    <div class="carousel-item active">
+      <img src="https://i.pinimg.com/564x/42/9b/af/429baf18cbb66c62afa1fcb44918dd6e.jpg">
+      <div class="carousel-caption text-start">
+        <h5>Luxury Wedding Ceremonies</h5>
+        <p>Celebrate your dream wedding in our grand banquet hall with customized décor, gourmet dining, and professional coordination.</p>
+      </div>
+    </div>
+
+    <div class="carousel-item">
+      <img src="https://www.jaypeehotels.com/blog/wp-content/uploads/2022/12/5-Benefits-of-Having-Meetings-in-Business-Hotels.jpg" alt="Corporate Event">
+      <div class="carousel-caption text-end">
+        <h5>Corporate Conferences</h5>
+        <p>Host productive business meetings and international conferences with state-of-the-art AV equipment and high-speed internet.</p>
+      </div>
+    </div>
+
+    <div class="carousel-item">
+      <img src="https://thumbs.dreamstime.com/b/table-set-wedding-another-catered-event-dinner-106759042.jpg" alt="Birthday Party">
+      <div class="carousel-caption text-center">
+        <h5>Memorable Celebrations</h5>
+        <p>Make birthdays, anniversaries, and social gatherings unforgettable in our beautifully designed event spaces.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#eventCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#eventCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+<br>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<!-- Membership Corner Section -->
+<div style="background-color:rgb(244, 242, 232)">
+<br>   
+<div class="mem">
+  <h2 class="text-center" style="font-family:lucida; font-size:3.5rem; color:rgb(223, 179, 22);">__________Exclusive Membership Benefits__________</h2>
+  <p class="text-center" style="font-size:1.2rem;">Join our membership program and enjoy exclusive perks and discounts!</p>
+</div>
+<br>
+<br>
+<section class="membership-corner">
+  <div class="membership-content">
+    <h2>Become a Grand View Member</h2>
+    <p>Unlock a world of privileges and luxury! Join our exclusive membership program and enjoy:</p>
+    <ul>
+      <li>✔ Up to 20% off on bookings</li>
+      <li>✔ Free room upgrades (when available)</li>
+      <li>✔ Early check-in & late check-out</li>
+      <li>✔ Complimentary welcome drinks</li>
+      <li>✔ Reward points on every stay</li>
+    </ul>
+    <a href="/membership_page" class="join-btn">Join Now</a>
+  </div>
+  <div class="membership-image">
+    <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=80" alt="Hotel Membership Benefits">
+  </div>
+</section>
+<br><br>
+</div>
+<br><br><br><br><br>
+
+
+  {% endblock body %}

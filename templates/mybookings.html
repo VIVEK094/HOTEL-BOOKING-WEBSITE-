@@ -1,0 +1,139 @@
+{% extends "base.html" %} 
+{%block title %}My Bookings{% endblock title %} 
+{% block body %}
+<style>
+    /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container for My Bookings */
+h2 {
+    text-align: center;
+    color: #333;
+    margin-top: 20px;
+    font-size: 28px;
+}
+
+table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table thead {
+    background-color: #4CAF50;
+    color: white;
+}
+
+table thead th {
+    padding: 12px;
+    text-align: left;
+    font-size: 16px;
+}
+
+table tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+table tbody td {
+    padding: 12px;
+    font-size: 14px;
+    color: #333;
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+p {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+    margin-top: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    table {
+        width: 100%;
+    }
+
+    table thead {
+        display: none;
+    }
+
+    table tbody tr {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    table tbody td {
+        display: block;
+        text-align: right;
+        padding: 10px;
+        position: relative;
+    }
+
+    table tbody td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        text-align: left;
+        font-weight: bold;
+    }
+}
+</style>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<h2>My Bookings</h2>
+{% if mybookings %}
+    <table>
+        <thead>
+            <tr>
+                <th>Room Name</th>
+                <th>Check-In</th>
+                <th>Check-Out</th>
+                <th>Guests</th>
+                <th>Total Amount</th>
+                <th>Booking Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.room_name }}</td>
+                <td>{{ booking.checkin }}</td>
+                <td>{{ booking.checkout }}</td>
+                <td>{{ booking.guests }}</td>
+                <td>${{ booking.total_amount }}</td>
+                <td>{{ booking.created_at|date:"Y-m-d H:i" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>You have no bookings yet.</p>
+{% endif %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock body %}

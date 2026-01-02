@@ -1,0 +1,279 @@
+{% extends "base.html" %}
+{% block title %}Payment Page{% endblock title %}
+{% block body %}
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        {% comment %} background-image: url('https://images.pexels.com/photos/3672388/pexels-photo-3672388.jpeg?cs=srgb&dl=pexels-shalenderkumar-3672388.jpg&fm=jpg');  {% endcomment %}
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+    .payment-container {
+        max-width: 800px;
+        margin: 50px auto;
+        border:1px dashed black;
+        padding: 30px;
+        background-color: rgba(255, 255, 255, 0.5); /* White background with 80% transparency */
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Optional shadow for better visibility */
+        font-family: 'Poppins', sans-serif;
+    }
+    
+
+    .payment-container h2 {
+        text-align: center;
+        {% comment %} font-weight:bold; {% endcomment %}
+        font-size: 3.0rem;
+        color:rgb(0, 5, 9);
+        margin-bottom: 20px;
+
+    }
+
+    .payment-container p {
+        font-size: 1.5rem;
+        {% comment %} font-weight:bold; {% endcomment %}
+        margin-bottom: 10px;
+    }
+
+    .payment-options {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.5s); /* White background with 80% transparency */
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for better visibility */
+    }
+
+    .payment-options h3 {
+        font-size: 1.8rem;
+        color:rgb(0, 4, 8);
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .payment-options button {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+        padding: 12px;
+        font-size: 1rem;
+        font-weight: bold;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .payment-options button:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .price-summary {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .price-summary {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.4); /* White background with 80% transparency */
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for better visibility */
+    }    
+    .price-summary p {
+        font-size: 1.2rem;
+        color:rgb(0, 3, 6);
+        margin-bottom: 10px;
+    }
+
+    .price-summary p strong {
+        color: #343a40;
+    }
+    .btn-pay{
+        margin-top:30px;
+        width:20%;
+        height:20%;
+        border-radius:NINE;
+        background-color:rgb(244, 232, 9);
+        margin-left:300px;
+        display:block;
+        color:black;        
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        font-weight:italic;
+    }
+    .btn-pay:hover {
+        background-color:rgb(245, 43, 7);
+        transform: scale(2.05);
+    }
+</style>
+
+<div class="payment-container">
+    <h2>Complete Your Payment</h2>
+    <div class="price-summary">
+        <h3 align="center">Booking Details</h3>
+        <br>
+        <p><strong>Name:</strong> {{ name }}</p>
+        <p><strong>Email:</strong> {{ email }}</p>
+        <p><strong>Phone:</strong> {{ phone }}</p>
+        <p><strong>Date:</strong> {{ date }}</p>
+        <p><strong>Plan Name:</strong> {{ plan_name }}</p>
+        <p><strong>Plan Rate:</strong> {{ plan_rate }}</p>
+        
+        
+       
+        <p><strong>Total Amount:</strong> ${{ total_amount }}</p>
+        <p><strong>Taxes:</strong> ${{ taxes }}</p>
+        <p><strong>Grand Total:</strong> ${{ grand_total }}</p>
+    </div>  
+
+    <div class="payment-options">
+        <h3>Choose a Payment Option</h3>
+        <button id="stripe-button" class="btn btn-primary">Pay with Stripe</button>
+        <button id="paypal-button" class="btn btn-secondary">Pay with PayPal</button>
+        <button id="upi-button" class="btn btn-success">Pay with UPI</button>
+    </div>
+
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    const stripe = Stripe('{{ stripe_public_key }}');
+
+    // Stripe Payment
+    document.getElementById('stripe-button').addEventListener('click', function () {
+        fetch("{% url 'create_stripe_session' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}",
+            },
+            body: JSON.stringify({
+                room_name: "{{ room_name }}",
+                total_amount: "{{ grand_total }}",  // Pass the grand total
+            }),
+        })
+        .then(response => response.json())
+        .then(session => {
+            if (session.id) {
+                stripe.redirectToCheckout({ sessionId: session.id });
+            } else {
+                alert("Error creating Stripe session.");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("An error occurred. Please try again.");
+        });
+    });
+    // PayPal Payment
+    document.getElementById('paypal-button').addEventListener('click', function () {
+        fetch("{% url 'create_paypal_payment' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}",
+            },
+            body: JSON.stringify({
+                total_amount: "{{ grand_total }}",  // Pass the grand total
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.approval_url) {
+                // Redirect the user to PayPal's approval URL
+                window.location.href = data.approval_url;
+            } else {
+                alert("Error creating PayPal payment.");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("An error occurred. Please try again.");
+        });
+    });
+
+    // UPI Payment
+    document.getElementById('upi-button').addEventListener('click', function () {
+        fetch("{% url 'create_razorpay_order' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}",
+            },
+            body: JSON.stringify({
+                total_amount: "{{ grand_total }}",
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.order_id) {
+                const options = {
+                    key: "{{ settings.RAZORPAY_KEY_ID }}", // Razorpay Key ID
+                    amount: "{{ grand_total|floatformat:2 }}" * 100, // Amount in paise
+                    currency: "INR",
+                    name: "Hotel Booking",
+                    description: "Payment for your booking",
+                    order_id: data.order_id, // Razorpay Order ID
+                    handler: function (response) {
+                        alert("Payment successful! Payment ID: " + response.razorpay_payment_id);
+                        window.location.href = "/payment-success/";
+                    },
+                    prefill: {
+                        name: "{{ name }}",
+                        email: "{{ email }}",
+                        contact: "{{ phone }}",
+                    },
+                    theme: {
+                        color: "#3399cc",
+                    },
+                };
+                const rzp = new Razorpay(options);
+                rzp.open();
+            } else {
+                alert("Error creating Razorpay order.");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+    });
+</script>
+
+<form method="GET" action="{% url 'booking_successful' %}">
+    {% csrf_token %}
+    <input type="hidden" name="name" value="{{ name }}">
+    <input type="hidden" name="email" value="{{ email }}">
+    <input type="hidden" name="phone" value="{{ phone }}">
+    <input type="hidden" name="plan_name" value="{{ plan_name }}">
+    <input type="hidden" name="plan_rate" value="{{ plan_rate }}">
+    <input type="hidden" name="date" value="{{ date }}">
+    <input type="hidden" name="total_amount" value="{{ total_amount }}">
+    <input type="hidden" name="taxes" value="{{ taxes }}">
+    <input type="hidden" name="grand_total" value="{{ grand_total }}">
+</form>
+</div>  
+{% endblock %}

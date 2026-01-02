@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% block title %}Booking Page{% endblock title %}
+{% block body %}
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-image: url('https://4kwallpapers.com/images/wallpapers/taj-mahal-unesco-world-heritage-site-agra-india-starry-sky-3840x2160-7948.jpg'); 
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+    .booking-container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 30px;
+        background-color:rgba(255, 255, 255, 0.5);
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .booking-container h2 {
+        text-align: center;
+        font-size: 2.5rem;
+        color:rgb(0, 4, 9);
+        margin-bottom: 20px;
+    }
+
+    .booking-container p {
+        text-align: center;
+        font-size: 1.4rem;
+        color:rgb(0, 4, 7);
+        margin-bottom: 30px;
+    }
+
+    .form-group label {
+        font-weight: bold;
+        color:rgb(0, 2, 5);
+    }
+
+    .form-control {
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solidrgb(163, 168, 172);
+    }
+
+    .form-control:focus {
+        border-color: #f7c08a;
+        box-shadow: 0 0 5px rgba(247, 192, 138, 0.5);
+    }
+
+    .btn-book-now {
+        background-color:rgb(246, 186, 126);
+        color: #343a40;
+        font-weight: bold;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        width: 100%;
+    }
+
+    .btn-book-now:hover {
+        background-color:rgb(228, 149, 64);
+        transform: scale(1.05);
+        color: #fff;
+    }
+
+    @media (max-width: 768px) {
+        .booking-container {
+            padding: 20px;
+        }
+
+        .booking-container h2 {
+            font-size: 2rem;
+        }
+
+        .booking-container p {
+            font-size: 1rem;
+        }
+    }
+</style>
+
+{% if user.is_authenticated %}
+    <!-- booking form -->
+  {% else %}
+    <div class="alert alert-info">
+      Please <a href="{% url 'login' %}?next={{ request.path }}">log in</a> to continue.
+    </div>
+{% endif %}
+<div class="booking-container">
+    <h2>Booking: {{ room_name }}</h2>
+    <p><strong>Room Rate:</strong> ${{ room_rate }} / night</p>
+
+    <form method="POST" >
+        {% csrf_token %}
+        <input type="hidden" name="room_name" value="{{ room_name }}">
+        <input type="hidden" name="room_rate" value="{{ room_rate }}">
+
+        <div class="form-group mb-3">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" name="phone" class="form-control" placeholder="Enter your phone number" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="checkin">Check-In Date</label>
+            <input type="date" id="checkin" name="checkin" class="form-control" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="checkout">Check-Out Date</label>
+            <input type="date" id="checkout" name="checkout" class="form-control" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="guests">Number of Guests</label>
+            <input type="number" id="guests" name="guests" class="form-control" placeholder="Enter number of guests" min="1" required oninput="updateRooms()">
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="phone">WhatsApp Number</label>
+            <input type="text" id="phone" name="phone" class="form-control" placeholder="Enter your WhatsApp number (e.g., +1234567890)" required>
+        </div>   
+
+        <div class="form-group mb-3">
+            <label for="rooms_required">Number of Rooms</label>
+            <select id="rooms_required" name="rooms_required" class="form-control" required>
+                <option value="" disabled selected>Select number of rooms</option>
+                <option value="1">1 Room</option>
+                <option value="2">2 Rooms</option>
+                <option value="3">3 Rooms</option>
+                <option value="4">4 Rooms</option>
+                <option value="5">5 Rooms</option>
+                <option value="6">6 Rooms</option>
+                <option value="7">7 Rooms</option>
+                <option value="8">8 Rooms</option>
+                <option value="9">9 Rooms</option>
+                <option value="10">10 Rooms</option>
+            </select>
+        </div>
+           
+        <div class="form-group mb-3">
+            <label for="special_requests">Special Requests</label>
+            <textarea id="special_requests" name="special_requests" class="form-control" rows="3" placeholder="Enter any special requests"></textarea>
+        </div>
+
+        <button type="submit" class="btn-book-now">Proceed</button>
+    </form>
+</div>
+
+<script>
+    function updateRooms() {
+        const guests = document.getElementById('guests').value;
+        console.log("Number of Guests:", guests); // Debugging: Log the number of guests
+    
+        if (!guests || guests <= 0) {
+            console.log("Invalid number of guests");
+            return; // Exit if guests input is invalid
+        }
+    
+        const rooms = Math.ceil(guests / 2); // Calculate rooms required (1 room for every 2 guests)
+        console.log("Calculated Rooms:", rooms); // Debugging: Log the calculated number of rooms
+    
+        const roomsDropdown = document.getElementById('rooms_required'); // Corrected ID
+        if (!roomsDropdown) {
+            console.log("Rooms dropdown not found");
+            return; // Exit if the dropdown is not found
+        }
+    
+        // Loop through the dropdown options and select the correct one
+        let roomFound = false;
+        for (let i = 0; i < roomsDropdown.options.length; i++) {
+            if (roomsDropdown.options[i].value == rooms) {
+                roomsDropdown.selectedIndex = i;
+                roomFound = true;
+                console.log("Room option selected:", roomsDropdown.options[i].value); // Debugging: Log the selected room
+                break;
+            }
+        }
+    
+        if (!roomFound) {
+            console.log("No matching room option found for:", rooms);
+        }
+    }
+</script>
+
+
+{% endblock %}

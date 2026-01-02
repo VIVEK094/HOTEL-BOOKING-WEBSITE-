@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% block title %}Membership Details{% endblock title %}
+{% block body %}
+<style>
+    .container1{
+    max-width: 500px;
+    background: #fffbe6;
+    border-radius: 0px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    padding: 40px 30px 30px 30px;
+    margin: 40px auto;
+    border: 2px dotted black;
+    }
+    .container1 h2 {
+    color:rgb(9, 0, 0);
+    font-family: 'Times New Roman';
+    font-size: 1.7rem;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+    }
+    .container1 p{
+    color:rgb(9, 0, 0);
+    font-family: 'Times New Roman';
+    font-size: 1.7rem;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+    font-weight:none;
+    }
+    .container {
+    max-width: 500px;
+    background: #fffbe6;
+    border-radius: 0px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    padding: 40px 30px 30px 30px;
+    margin: 40px auto;
+    border: 2px dotted black;
+}
+
+h2 {
+    color: #a17a05;
+    font-family: 'Times New Roman', serif;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+label {
+    font-weight: 600;
+    color: #6a82fb;
+    margin-bottom: 8px;
+    display: block;
+    font-size: 1.1rem;
+}
+
+input.form-control {
+    border-radius: 8px;
+    border: 1.5px solid #f7c08a;
+    padding: 12px 14px;
+    font-size: 1.08rem;
+    background: #f9f7f3;
+    transition: border-color 0.2s;
+}
+
+input.form-control:focus {
+    border-color: #6a82fb;
+    outline: none;
+    background: #fff;
+}
+
+.btn-animated {
+    background: linear-gradient(270deg, #f7c08a, #ff6f91, #6a82fb, #f7c08a);
+    background-size: 600% 600%;
+    color: #222 !important;
+    border: none;
+    font-weight: bold;
+    border-radius: 30px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: gradient-move 3s ease infinite;
+    padding: 12px 0;
+    width: 100%;
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+}
+
+.btn-animated:hover {
+    transform: scale(1.06);
+    color: #fff !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+}
+
+@keyframes gradient-move {
+    0% {background-position:0% 50%;}
+    50% {background-position:100% 50%;}
+    100% {background-position:0% 50%;}
+}
+</style>
+<div class="container1">
+    <h2><strong style="font-family:calibri">Plan Name:</strong> {{ plan_name }}</h2>
+    <p><strong style="font-family:calibri">Plan Rate:</strong> ${{ plan_rate }}</p>
+</div>    
+<div class="container my-5">
+    {% comment %} <h2 class="mb-4 text-center">Enter Your Details for {{ plan|title }} Membership</h2> {% endcomment %}
+    <form method="post" action="{% url 'membership_confirmation' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Full Name</label>
+            <input required type="text" class="form-control" id="name" name="name" placeholder="Your Name">
+        </div>
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input required type="email" class="form-control" id="email" name="email" placeholder="you@email.com">
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input required type="tel" class="form-control" id="phone" name="phone" placeholder="Your Phone">
+        </div>
+        <div class="form-group mb-3">
+            <label for="date">Date</label>
+            <input type="date" id="date" name="date" class="form-control" required>
+        </div>
+        <input type="hidden" name="plan_name" value="{{ plan_name }}">
+        <input type="hidden" name="plan_rate" value="{{ plan_rate }}">
+        <button type="submit" class="btn btn-animated mt-3">Proceed</button>
+    </form>
+</div>
+{% endblock body %}

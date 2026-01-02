@@ -1,0 +1,273 @@
+{% extends 'base.html' %}
+{% block title %}Booking Successful{% endblock title %}
+{% block body %}
+<style>
+    .top_header{
+        text-align: center;
+        font-family: lucida;
+        font-size: 2.2rem;
+        
+        color: #228f3cff;
+    }
+    .top_header1 {
+        text-align: center;
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.3rem;
+        color: #707d6cff;
+        margin-bottom: 20px;
+    }
+    .success-container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 30px;
+        background-color: #e9f7ef;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .success-container h2 {
+        font-size: 2.5rem;
+        color: #28a745;
+        margin-bottom: 20px;
+    }
+
+    .success-container p {
+        font-size: 1.2rem;
+        color: #6c757d;
+        margin-bottom: 20px;
+    }
+
+    .details-table {
+        width: 90%;
+        margin-top: 0px;
+        border-collapse: collapse;
+        font-size: 1rem;
+        text-align: left;
+        margin-left: 95px;
+    }
+
+    .details-table th, .details-table td {
+        padding: 12px 15px;
+        border: 1px solid #dedfb1ff;
+    }
+
+    .details-table th {
+        background-color: #f0f1e9ff;
+        color: #343a40;
+        font-weight: bold;
+    }
+
+    .details-table tr:nth-child(even) {
+        background-color: #f1f1ebff;
+    }
+
+    .btn-primary {
+        display: inline-block;
+        padding: 12px 25px;
+        font-size: 1rem;
+        font-weight: bold;
+        color: #fff;
+        background-color: #15dd36ff;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top:40px;
+        margin-left: 500px;
+        gap: none;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #76f309ff;
+        transform: scale(1.05);
+    }
+
+    .feedback-container {
+        margin-top: 50px;
+        margin: auto;
+        padding: 20px;
+        background-color: rgb(251, 248, 248);
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 70%;
+    }
+
+    .feedback-container h3 {
+        font-size: 2.9rem;
+        color: rgba(223, 179, 22);
+        font-family: inter;
+        font-weight: none;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .feedback-container textarea {
+        width: 90%;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        resize: none;
+        margin-bottom: 75px;
+        margin-left: 5px;
+    }
+
+    .feedback-container textarea:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+        outline: none;
+    }
+
+    .feedback-container button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+        color: #fff;
+        background-color: #28a745;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .feedback-container button:hover {
+        background-color: #218838;
+        transform: scale(1.05);
+    }
+
+    .star-rating {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+
+    .star-rating input {
+        display: none;
+    }
+
+    .star-rating label {
+        font-size: 2rem;
+        color: #ddd;
+        cursor: pointer;
+        transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .star-rating input:checked ~ label,
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+        color: #ffc107;
+        transform: scale(1.2);
+    }
+</style>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% comment %} <div class="success-container"> {% endcomment %}
+    <h2 class="top_header">-----Booking Successful-----</h2>
+    <p class="top_header1">Your booking has been confirmed. Please pay at the hotel upon arrival.</p>
+<br>
+<br>
+    <table class="details-table">
+        <tr>
+            <td><strong>Name</strong></td>
+            <td>{{ name }}</td>
+        </tr>
+        <tr>
+            <td><strong>Phone Number</strong></td>
+            <td>{{ phone }}</td>
+        </tr>
+        <tr>
+            <td><strong>Room</strong></td>
+            <td>{{ room_name }}</td>
+        </tr>
+        <tr>
+            <td><strong>Rate</strong></td>
+            <td>${{ room_rate }} / night</td>
+        </tr>
+        <tr>
+            <td><strong>Check-In</strong></td>
+            <td>{{ checkin }}</td>
+        </tr>
+        <tr>
+            <td><strong>Check-Out</strong></td>
+            <td>{{ checkout }}</td>
+        </tr>
+        <tr>
+            <td><strong>Number of Nights</strong></td>
+            <td>{{ nights }}</td>
+        </tr>
+        <tr>
+            <td><strong>Guests</strong></td>
+            <td>{{ guests }}</td>
+        </tr>
+        <tr>
+            <td><strong>Rooms Required</strong></td>
+            <td>{{ rooms_required }}</td>
+        </tr>
+        <tr>
+            <td><strong>Total Amount</strong></td>
+            <td>${{ total_amount }}</td>
+        </tr>
+        <tr>
+            <td><strong>Taxes</strong></td>
+            <td>${{ taxes }}</td>
+        </tr>
+        <tr>
+            <td><strong>Grand Total</strong></td>
+            <td>${{ grand_total }}</td>
+        </tr>
+    </table> 
+    <a href="/" class="btn-primary">Go to Home</a>
+    <a href="{% url 'download_invoice' %}"class="btn-primary" ...>Download Receipt (PDF)</a>
+{% comment %} </div> {% endcomment %}
+{% comment %} <div style="margin-top: 10px;margin-left: 750px;">
+   <a href="{% url 'download_invoice' %}"class="btn-primary" ...>Download Invoice (PDF)</a>
+</div> {% endcomment %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="feedback-container">
+    <h3>Share Your Feedback With Us!</h3>
+    <form method="POST" action="{% url 'submit_feedback' %}">
+        {% csrf_token %}
+        <div class="star-rating">
+            <input type="radio" id="star5" name="rating" value="5">
+            <label for="star5">&#9733;</label>
+            <input type="radio" id="star4" name="rating" value="4">
+            <label for="star4">&#9733;</label>
+            <input type="radio" id="star3" name="rating" value="3">
+            <label for="star3">&#9733;</label>
+            <input type="radio" id="star2" name="rating" value="2">
+            <label for="star2">&#9733;</label>
+            <input type="radio" id="star1" name="rating" value="1">
+            <label for="star1">&#9733;</label>
+        </div>
+        <textarea name="feedback" rows="5" placeholder="Write your feedback here..."></textarea>
+        <button type="submit">Submit Feedback</button>
+    </form>
+    {% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-success" style="margin-bottom: 20px;">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}

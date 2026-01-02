@@ -1,0 +1,305 @@
+{% extends "base.html" %}
+{% block title %}Career{% endblock title %}
+{% block body %}
+<style>
+    /* General Styles */
+    .heading h1{
+        font-family:lucida;
+        text-align:center;
+        font-size:3.5rem;
+        color:rgb(104, 79, 4);
+    }
+    body {
+        font-family: Arial, sans-serif;
+        background-color:rgb(233, 230, 224);
+        margin: 0;
+        padding: 0;
+    }
+
+    .career-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        background:rgb(246, 244, 242);
+    }
+
+    .career-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .career-header h1 {
+        font-size: 36px;
+        color: #333;
+    }
+
+    .career-header p {
+        font-size: 18px;
+        color: #666;
+    }
+
+    .job-listings {
+        margin-top: 30px;
+    }
+
+    .job-listing {
+        border-bottom: 1px solid #ddd;
+        padding: 20px 0;
+    }
+
+    .job-listing h3 {
+        font-size: 24px;
+        color: #333;
+    }
+
+    .job-listing p {
+        font-size: 16px;
+        color: #666;
+        margin: 10px 0;
+    }
+
+    .apply-button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #fff;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .apply-button:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+    }
+
+    .benefits-section {
+        margin-top: 40px;
+    }
+
+    .benefits-section h2 {
+        font-size: 28px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .benefits-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .benefits-list li {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+
+    .benefits-list li::before {
+        content: "✔";
+        color: #4CAF50;
+        margin-right: 10px;
+    }
+
+    .application-form {
+        margin-top: 40px;
+    }
+
+    .application-form h2 {
+        font-size: 28px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .application-form form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .application-form label {
+        font-size: 16px;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    .application-form input,
+    .application-form textarea {
+        padding: 10px;
+        font-size: 16px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .application-form button {
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #fff;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .application-form button:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+    }
+
+    .alert-success {
+        padding: 15px;
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+    @keyframes blink {
+        50% {
+            opacity: 0;
+        }
+    }
+    
+    .job-listing h3 {
+        animation: blink 1s infinite; /* Apply the blink animation */
+        color: red; /* Default color */
+        font-weight: bold;
+    }
+    @keyframes gradient {
+        0% {
+            color: red;
+        }
+        25% {
+            color: orange;
+        }
+        50% {
+            color: black;
+        }
+        75% {
+            color: green;
+        }
+        100% {
+            color: blue;
+        }
+    }
+</style>
+<br>
+<br>
+<br>
+<div class="heading">
+    <h1>_______________Want to Become an Employee!_______________</h1>
+    <br>
+    <p style="text-align: center; font-size: 1.2rem; color: rgb(49, 39, 2); padding-left:110px; padding-right:100px;">
+        At Hotel Grand View, we are always looking for passionate and talented individuals to join our team. 
+        Whether you're just starting your career or you're an experienced professional, 
+        we offer opportunities 
+        to grow, learn, and make a difference in the hospitality industry.
+    </p>
+    <br>
+    <br>
+    <br>
+    <marquee 
+    style="text-align: center; font-size: 1.5rem; font-weight: bold; font-family: sans-serif; animation: gradient 5s infinite;" 
+    scrollamount="18" scrolldelay="100" loop="infinite">
+    Welcome Here! Explore our current job openings below and take the first step toward an exciting and rewarding career with us.
+    </marquee>
+    
+</div>    
+<div class="career-container">
+    <div class="career-header">
+        <h1>Join Our Team</h1>
+        <p>At Hotel Grand View, we believe in creating a workplace where talent thrives and innovation flourishes. Join us and be part of a team that values excellence, creativity, and dedication.</p>
+    </div>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-success" style="color: green; font-size: 18px; margin-bottom: 20px;">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="job-listings">
+        <h2 style="text-decoration:underline;">Current Job Openings</h2>
+        <div class="job-listing">
+            <h3>Front Desk Executive</h3>
+            <p>Location: Hotel Grand View, City Center</p>
+            <p>Responsibilities: Managing guest check-ins and check-outs, handling reservations, and providing exceptional customer service.</p>
+            <a href="#application-form" class="apply-button">Apply Now</a>
+        </div>
+        <div class="job-listing">
+            <h3>Housekeeping Staff</h3>
+            <p>Location: Hotel Grand View, City Center</p>
+            <p>Responsibilities: Ensuring rooms and public areas are clean and well-maintained, and attending to guest requests promptly.</p>
+            <a href="#application-form" class="apply-button">Apply Now</a>
+        </div>
+        <div class="job-listing">
+            <h3>Restaurant Manager</h3>
+            <p>Location: Hotel Grand View, City Center</p>
+            <p>Responsibilities: Overseeing restaurant operations, managing staff, and ensuring a high-quality dining experience for guests.</p>
+            <a href="#application-form" class="apply-button">Apply Now</a>
+        </div>
+    </div>
+
+    <div class="benefits-section">
+        <h2>Why Work With Us?</h2>
+        <ul class="benefits-list">
+            <li>Competitive salary and benefits package</li>
+            <li>Opportunities for career growth and development</li>
+            <li>Employee discounts on hotel stays and dining</li>
+            <li>Supportive and inclusive work environment</li>
+            <li>Training programs to enhance your skills</li>
+        </ul>
+    </div>
+
+    <div class="application-form" id="application-form">
+        <h2>Submit Your Application</h2>
+        <form method="POST" action="{% url 'submit_application' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required />
+
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required />
+
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" name="phone" required />
+
+            
+            <label for="rooms_required">Number of Rooms</label>
+            <select id="rooms_required" name="rooms_required" class="form-control" required>
+                <option value="" disabled selected>Select Job Role</option>
+                <option >Front Desk Executive</option>
+                <option >Housekeeping Staff</option>
+                <option >Restaurant Manager</option>
+            </select>
+            
+
+            <label for="resume">Upload Resume</label>
+            <input type="file" id="resume" name="resume" required />
+
+            <label for="message">Cover Letter</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+
+            <button type="submit">Submit Application</button>
+        </form>
+    </div>
+</div>
+<br>
+<marquee 
+    style="text-align: center; font-size: 1.5rem; color: rgb(248, 43, 43); font-weight:bold; font-family:sans-serif;" 
+    scrollamount="18" scrolldelay="100"  loop="infinite">
+    For any Enquiry go to Conatct Us section or call us at 1800-111-1006 & Stay Tuned For More Job Info.
+</marquee>
+{% endblock body %}

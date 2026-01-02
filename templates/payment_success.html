@@ -1,0 +1,261 @@
+{% extends 'base.html' %}
+{% block title %}Payment Successful{% endblock title %}
+{% block body %}
+<style>
+    .success-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 30px;
+        background-color: #e9f7ef;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .success-container h2 {
+        font-size: 2.5rem;
+        color: #28a745;
+        margin-bottom: 20px;
+    }
+
+    .success-container p {
+        font-size: 1.2rem;
+        color: #6c757d;
+        margin-bottom: 20px;
+    }
+
+    .btn-primary {
+        display: inline-block;
+        padding: 12px 25px;
+        font-size: 1rem;
+        font-weight: bold;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+    }
+
+    .feedback-container {
+        margin-top: 50px;
+        margin:auto;
+        padding: 20px;
+        background-color:rgb(251, 248, 248);
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width:70%;
+        
+    }
+
+    .feedback-container h3 {
+        font-size: 2.9rem;
+        color: rgba(223, 179, 22);
+        font-family:inter;
+        font-weight:none;
+        margin-bottom: 15px;
+        text-align:center;
+        
+    }
+
+    .feedback-container textarea {
+        width: 90%;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        resize: none;
+        margin-bottom: 75px;
+        margin-left: 5px;
+        
+        
+    }
+
+    .feedback-container textarea:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+        outline: none;
+    }
+
+    .feedback-container button {
+        {% comment %} display: inline-block; {% endcomment %}
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+        color: #fff;
+        background-color: #28a745;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        
+    }
+
+    .feedback-container button:hover {
+        background-color: #218838;
+        transform: scale(1.05);
+    }
+
+    .star-rating {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+
+    .star-rating input {
+        display: none;
+    }
+
+    .star-rating label {
+        font-size: 2rem;
+        color: #ddd;
+        cursor: pointer;
+        transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .star-rating input:checked ~ label,
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+        color: #ffc107;
+        transform: scale(1.2);
+    }
+
+    .success-container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 30px;
+        background-color: #e9f7ef;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .success-container h4 {
+        font-size: 2.5rem;
+        color: #28a745;
+        margin-bottom: 20px;
+    }
+
+</style>
+
+<div class="success-container">
+    <h2>Payment Successful</h2>
+    <p>{{ message }}</p>
+    <a href="/" class="btn btn-primary">Go to Home</a>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="success-container">
+    <h4>Your booking has been confirmed. Please pay at the hotel upon arrival.</h4>
+
+    <table class="details-table">
+        <tr>
+            <th>Field</th>
+            <th>Details</th>
+        </tr>
+        <tr>
+            <td><strong>Name</strong></td>
+            <td>{{ name }}</td>
+        </tr>
+        <tr>
+            <td><strong>Phone Number</strong></td>
+            <td>{{ phone }}</td>
+        </tr>
+        <tr>
+            <td><strong>Room</strong></td>
+            <td>{{ room_name }}</td>
+        </tr>
+        <tr>
+            <td><strong>Rate</strong></td>
+            <td>${{ room_rate }} / night</td>
+        </tr>
+        <tr>
+            <td><strong>Check-In</strong></td>
+            <td>{{ checkin }}</td>
+        </tr>
+        <tr>
+            <td><strong>Check-Out</strong></td>
+            <td>{{ checkout }}</td>
+        </tr>
+        <tr>
+            <td><strong>Number of Nights</strong></td>
+            <td>{{ nights }}</td>
+        </tr>
+        <tr>
+            <td><strong>Guests</strong></td>
+            <td>{{ guests }}</td>
+        </tr>
+        <tr>
+            <td><strong>Rooms Required</strong></td>
+            <td>{{ rooms_required }}</td>
+        </tr>
+        <tr>
+            <td><strong>Total Amount</strong></td>
+            <td>${{ total_amount }}</td>
+        </tr>
+        <tr>
+            <td><strong>Taxes</strong></td>
+            <td>${{ taxes }}</td>
+        </tr>
+        <tr>
+            <td><strong>Grand Total</strong></td>
+            <td>${{ grand_total }}</td>
+        </tr>
+    </table>
+<div class="success-container">
+    <h2>Payment Successful</h2>
+    <p>{{ message }}</p>
+    <h3 style="margin-top:30px;">Invoice</h3>
+    <table class="details-table">
+        <!-- ... your booking details rows ... -->
+    </table>
+    <a href="/" class="btn-primary">Go to Home</a>
+</div>
+    <a href="/" class="btn-primary">Go to Home</a>
+    
+</div>
+<div style="margin-top: 10px;">
+    <a href="{% url 'download_invoice' booking_id=booking_id %}" class="btn btn-primary" target="_blank">Download Invoice (PDF)</a>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="feedback-container">
+    <h3>Share Your Feedback With Us!</h3>
+    <form method="POST" action="{% url 'submit_feedback' %}">
+        {% csrf_token %}
+        <div class="star-rating">
+            <input type="radio" id="star5" name="rating" value="5">
+            <label for="star5">&#9733;</label>
+            <input type="radio" id="star4" name="rating" value="4">
+            <label for="star4">&#9733;</label>
+            <input type="radio" id="star3" name="rating" value="3">
+            <label for="star3">&#9733;</label>
+            <input type="radio" id="star2" name="rating" value="2">
+            <label for="star2">&#9733;</label>
+            <input type="radio" id="star1" name="rating" value="1">
+            <label for="star1">&#9733;</label>
+        </div>
+        <textarea name="feedback" rows="5" placeholder="Write your feedback here..."></textarea>
+        <button type="submit">Submit Feedback</button>
+    </form>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>

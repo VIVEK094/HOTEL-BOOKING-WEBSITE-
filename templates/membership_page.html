@@ -1,0 +1,536 @@
+{%extends 'base.html'%}
+{%block title%}Membership Page{%endblock title%}
+{%block body%}
+<style>
+.image-div{
+    width:100%;
+    height:100%;
+}    
+.top-photo{
+    width:100%;
+    height:100%;
+}
+.top{
+    background-color:rgb(232, 228, 220);
+}    
+.heading h1{
+    font-size:3.5rem;
+    font-family:inter;
+    text-align:center;
+    color: rgb(161, 122, 5);
+}
+.heading p{
+    font-size:1.2rem;
+    font-family:calibri;
+    text-align:center;
+}
+
+.wrapper {
+    max-width: 1500px;
+    
+    margin: auto;
+    position: relative;
+    user-select: none;
+}
+.carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 30px;
+    padding: 20px 0;
+    scrollbar-width: none; /* Firefox */
+}
+.carousel::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
+.card {
+    min-width: 900px;
+    height:600px;
+    background: #fff;
+    border-radius: 0px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s;
+    cursor: grab;
+}
+.card:active {
+    cursor: grabbing;
+    transform: scale(0.97);
+}
+.img img {
+    width: 800px;
+    height: 500px;
+    object-fit: cover;
+    border-radius: none;
+    margin-bottom: 10px;
+}
+#left, #right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    background:rgba(246, 243, 240, 0.97);
+    color: #222;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    user-select: none;
+}
+#left { left: -100px; }
+#right { right: -100px; }
+@media (max-width: 600px) {
+    .wrapper { max-width: 100%; }
+    .card { min-width: 180px; }
+    #left, #right { display: none; }
+}
+
+.plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 35px;
+    max-width: 1200px;
+    margin: 40px auto 60px auto;
+    padding: 0 20px;
+}
+.plan-card {
+    background: linear-gradient(135deg,rgb(242, 240, 235) 60%,rgb(244, 224, 190) 100%);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    padding: 36px 24px 28px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.plan-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+}
+.plan-icon {
+    font-size: 2.8rem;
+    margin-bottom: 18px;
+    color: #a17a05;
+}
+.plan-card.gold .plan-icon { color: #FFD700; }
+.plan-card.platinum .plan-icon { color: #b3b3b3; }
+.plan-card.silver .plan-icon { color:rgb(157, 137, 137); }
+.plan-card.diamond .plan-icon { color:rgb(0, 7, 9); }
+.plan-card h3 {
+    font-family: 'Times New Roman', serif;
+    font-size: 1.5rem;
+    color: #a17a05;
+    margin-bottom: 12px;
+    margin-top: 0;
+}
+.plan-card p {
+    color: #444;
+    font-size: 1.05rem;
+    margin-bottom: 0;
+}
+@media (max-width: 700px) {
+    .plans-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .plan-card {
+        padding: 28px 12px 18px 12px;
+    }
+}
+
+.image-details-flex {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    max-width: 900px;
+    margin: auto;
+    flex-wrap: wrap;
+    background: #f8f6f2;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    padding: 30px 20px;
+}
+.img-1 {
+    width: 320px;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    background: #fff;
+}
+.details-side {
+    flex: 1;
+    min-width: 250px;
+}
+@media (max-width: 900px) {
+    .image-details-flex {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+        padding: 20px 5px;
+    }
+    .details-side {
+        min-width: unset;
+    }
+}
+.image-details-flex {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    border:2px dashed black;
+    max-width: 900px;
+    margin: auto;
+    flex-wrap: wrap;
+    background:rgb(246, 244, 241);
+    border-radius: 0px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    padding: 30px 20px;
+}
+.img-1, .img-3{
+    width: 320px;
+    height: 320px;
+    object-fit: cover;
+    border-radius:500px;
+    box-shadow: 0 4px 24px rgba(12, 0, 0, 0.08);
+}
+.img-2,{
+    width: 320px;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 0px;
+    border:10px black;
+    box-shadow: 0 4px 24px rgba(7, 0, 0, 0.08);
+}
+.img-4{
+    width: 320px;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 800px;
+    box-shadow: 0 4px 24px rgba(7, 0, 0, 0.08);
+}
+.details-side {
+    flex: 1;
+    min-width: 250px;
+}
+@media (max-width: 900px) {
+    .image-details-flex {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+        padding: 20px 5px;
+    }
+    .details-side {
+        min-width: unset;
+    }
+}
+.btn-animated {
+    background: linear-gradient(270deg, #f7c08a, #ff6f91, #6a82fb, #f7c08a);
+    background-size: 600% 600%;
+    color: #222 !important;
+    border: none;
+    font-weight: bold;
+    border-radius: 0px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: gradient-move 3s ease infinite;
+}
+.btn-animated:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    color: #fff !important;
+}
+@keyframes gradient-move {
+    0% {background-position:0% 50%;}
+    50% {background-position:100% 50%;}
+    100% {background-position:0% 50%;}
+}
+</style>
+
+<!-- Font Awesome CDN for icons (if not already included in base.html) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</style>    
+<div class="image-div">
+<img class="top-photo" src="https://www.raklet.com/wp-content/uploads/2022/12/image2.jpg"></img>
+</div>
+<br>
+<br>
+<br>
+<br>
+<div class=heading>
+    <h1>__________Our Membership Priviledges__________</h1>
+    <p>Unlock exclusive benefits and special privileges by joining our Grand View Hotel membership program.</p>
+</div>
+<br>
+<br>
+<br>
+<div>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, 
+                                   initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/script.js" defer></script>
+    <link rel="stylesheet" href=
+"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</head>
+
+<body>
+<div class="top">
+<br>    
+    <div class="wrapper">
+        <i id="left" class="fa-solid  fas fa-angle-left"></i>
+        <ul class="carousel">
+            <li class="card">
+                <div class="img"><img src=
+"https://cdn.sanity.io/images/ocl5w36p/prod4/3c084bf091ded4bd16215467ff6c4acfac46658d-1398x1228.png?w=1024&auto=format&dpr=2" 
+                                      alt="" draggable="false"> </div>
+                <h3 style="color: brown; font-weight:NONE; font-family:timesnewroman;">
+                      COMPLEMENTARY ACCESS TO HOTEL FACILTIES
+                  </h3>
+            </li>
+            <li class="card">
+                <div class="img"><img src=
+"https://cdn.sanity.io/images/ocl5w36p/prod4/1177babe5b6576c0795724bfc5d5906c0fa2abb4-699x614.png?w=1024&auto=format&dpr=2" 
+                                      alt="" draggable="false"> </div>
+                <h3 style="color: brown; font-family:timesnewroman; font-weight:none;">BUSINESS CENTERS & LOUNGE ACCESS</h3>
+                
+            </li>
+            <li class="card">
+                <div class="img"><img src=
+"https://cdn.sanity.io/images/ocl5w36p/prod4/dcd343a34cb1375a9628906f155d23f44d92c43e-1401x1228.jpg?w=1024&auto=format&dpr=2" 
+                                      alt="" draggable="false"> </div>
+                <h3 style="color: brown; font-family:timesnewroman; font-weight:none;">INVITAION TO EXCLUSIVE EVENTS</h3>
+                
+            </li>
+            <li class="card">
+                <div class="img"><img src=
+"https://cdn.sanity.io/images/ocl5w36p/prod4/dfbf98f21183274346cded0e3341f6c65f3e7d9d-1398x1228.png?w=1024&auto=format&dpr=2" 
+                                      alt="" draggable="false"> </div>
+                <h3 style="color: brown; font-family:timesnewroman; font-weight:none;">COMPLEMENTARY ROOM UPGRADES</h3>
+                
+            </li>
+            <li class="card">
+                <div class="img"><img src=
+"https://cdn.sanity.io/images/ocl5w36p/prod4/187c6ac44a997ec9a7ea5984e5326aa05ce872d0-1398x1228.jpg?w=1024&auto=format&dpr=2" 
+                                      alt="" draggable="false"> </div>
+                <h3 style="color: brown; font-family:timesnewroman; font-weight:none;">DINING & WELLNESS EXPERIENCE</h3>
+                
+            </li>
+            <li class="card">
+                <div class="img"><img src=
+"https://cdn.sanity.io/images/ocl5w36p/prod4/bfb6008e5204910123d61f3e2044ea79cc4bf107-1398x1228.jpg?w=1024&auto=format&dpr=2" 
+                                      alt="" draggable="false"> </div>
+                <h3 style="color: brown; font-family:timesnewroman; font-weight:none;">A LIFETIME OF PREVILEDGES</h3>
+                
+            </li>
+        </ul>
+        <i id="right" class="fa-solid fas fa-angle-right"></i>
+    </div>
+<br>    
+</div>    
+<script>
+const carousel = document.querySelector('.carousel');
+const leftArrow = document.getElementById('left');
+const rightArrow = document.getElementById('right');
+
+let isDown = false;
+let startX;
+let scrollLeft;
+
+carousel.addEventListener('mousedown', (e) => {
+    isDown = true;
+    carousel.classList.add('active');
+    startX = e.pageX - carousel.offsetLeft;
+    scrollLeft = carousel.scrollLeft;
+});
+carousel.addEventListener('mouseleave', () => {
+    isDown = false;
+    carousel.classList.remove('active');
+});
+carousel.addEventListener('mouseup', () => {
+    isDown = false;
+    carousel.classList.remove('active');
+});
+carousel.addEventListener('mousemove', (e) => {
+    if(!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - carousel.offsetLeft;
+    const walk = (x - startX) * 2; //scroll-fast
+    carousel.scrollLeft = scrollLeft - walk;
+});
+
+// Touch support for mobile
+carousel.addEventListener('touchstart', (e) => {
+    isDown = true;
+    startX = e.touches[0].pageX - carousel.offsetLeft;
+    scrollLeft = carousel.scrollLeft;
+});
+carousel.addEventListener('touchend', () => {
+    isDown = false;
+});
+carousel.addEventListener('touchmove', (e) => {
+    if(!isDown) return;
+    const x = e.touches[0].pageX - carousel.offsetLeft;
+    const walk = (x - startX) * 2;
+    carousel.scrollLeft = scrollLeft - walk;
+});
+
+// Arrow navigation
+leftArrow.onclick = () => carousel.scrollBy({left: -700, behavior: 'smooth'});
+rightArrow.onclick = () => carousel.scrollBy({left: 700, behavior: 'smooth'});
+</script>
+</body>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class=heading>
+    <h1>__________Our Plans__________</h1>
+   <p>Choose from our exclusive membership plans designed to suit every guest's lifestyle and needs.</p>
+</div>
+<br>
+<br>
+<br>
+<div class="plans-grid">
+    <div class="plan-card gold">
+        <div class="plan-icon"><i class="fas fa-crown"></i></div>
+        <h3>Gold Plan</h3>
+        <p>Complementary access to hotel facilities, exclusive discounts, and more.</p>
+    </div>
+    <div class="plan-card platinum">
+        <div class="plan-icon"><i class="fas fa-gem"></i></div>
+        <h3>Platinum Plan</h3>
+        <p>Business lounge access, free upgrades, late check-out, and premium support.</p>
+    </div>
+    <div class="plan-card silver">
+        <div class="plan-icon"><i class="fas fa-star"></i></div>
+        <h3>Silver Plan</h3>
+        <p>Invitations to exclusive events, special offers, and wellness experiences.</p>
+    </div>
+    <div class="plan-card diamond">
+        <div class="plan-icon"><i class="fas fa-gem"></i></div>
+        <h3>Diamond Plan</h3>
+        <p>All platinum benefits plus a lifetime of privileges and personalized services.</p>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<div class="sub-heading" style="background-color:rgb(244, 241, 236);">
+    <br>
+    <div class="image-details-flex">
+        <img class="img-1" src="https://worldoflilliputs.com/wp-content/uploads/2021/07/GOLD-655x655.png" alt="Gold Membership" />
+        <div class="details-side">
+            <h3 style="font-size:2.5rem; color:#a17a05; font-family:timesnewroman; margin-bottom: 18px;">Gold Membership</h3>
+            <div style="font-size:2rem; margin-bottom: 18px;">
+                <span style="color:#888; text-decoration: line-through; margin-right: 18px;">$90.00</span>
+                <span style="color:#27ae60; font-weight:bold;">$77.00</span>
+            </div>
+            <a href="{% url 'membership_details' %}?plan_name=Gold Membership&plan_rate=77" style="font-size:1.2rem; color:#222; font-weight:bold;" class="btn btn-animated">Buy Now</a>
+            <ul style="font-size:1.2rem; color:#444; line-height:2; margin-top: 24px;">
+                <li>Priority check-in and late check-out</li>
+                <li>Exclusive member discounts on rooms and dining</li>
+                <li>Complimentary access to hotel facilities</li>
+                <li>Special invitations to member-only events</li>
+            </ul>
+        </div>
+    </div>
+    <br>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="sub-heading">
+    <br>
+    <div class="image-details-flex">
+        <img class="img-3" src="https://clipground.com/images/platinum-clipart-13.jpg" alt="Platinum Membership" />
+        <div class="details-side">
+            <h3 style="font-size:2.5rem; color:#a17a05; font-family:timesnewroman; margin-bottom: 18px;">Platinum Membership</h3>
+            <div style="font-size:2rem; margin-bottom: 18px;">
+                <span style="color:#888; text-decoration: line-through; margin-right: 18px;">$98.00</span>
+                <span style="color:#27ae60; font-weight:bold;">$89.00</span>
+            </div>
+            <a href="{% url 'membership_details' %}?plan_name=Platinum Membership&plan_rate=89" style="font-size:1.2rem; color:#222; font-weight:bold;" class="btn btn-animated">Buy Now</a>
+            <ul style="font-size:1.2rem; color:#444; line-height:2; margin-top: 24px;">
+                <li>Priority check-in and late check-out</li>
+                <li>Exclusive member discounts on rooms and dining</li>
+                <li>Complimentary access to hotel facilities</li>
+                <li>Special invitations to member-only events</li>
+            </ul>
+        </div>
+    </div>
+    <br>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="sub-heading" style="background-color:rgb(244, 241, 236);">
+    <br>
+    <div class="image-details-flex">
+        <img class="img-3" src="https://th.bing.com/th/id/OIP.s9klrDnrPvMOP19kyQe_6AHaHa?w=1000&h=1000&rs=1&pid=ImgDetMain" alt="Silver Membership" />
+        <div class="details-side">
+            <h3 style="font-size:2.5rem; color:#a17a05; font-family:timesnewroman; margin-bottom: 18px;">Silver Membership</h3>
+            <div style="font-size:2rem; margin-bottom: 18px;">
+                <span style="color:#888; text-decoration: line-through; margin-right: 18px;">$78.00</span>
+                <span style="color:#27ae60; font-weight:bold;">$49.00</span>
+            </div>
+            <a href="{% url 'membership_details' %}?plan_name=Silver Membership&plan_rate=49" style="font-size:1.2rem; color:#222; font-weight:bold;" class="btn btn-animated">Buy Now</a>
+            <ul style="font-size:1.2rem; color:#444; line-height:2; margin-top: 24px;">
+                <li>Priority check-in and late check-out</li>
+                <li>Exclusive member discounts on rooms and dining</li>
+                <li>Complimentary access to hotel facilities</li>
+                <li>Special invitations to member-only events</li>
+            </ul>
+        </div>
+    </div>
+    <br>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="sub-heading">
+    <br>
+    <div class="image-details-flex">
+        <img class="img-4" src="https://amcham.co.il/images/members/Diamondmembers.jpg" alt="Diamond Membership" />
+        <div class="details-side">
+            <h3 style="font-size:2.5rem; color:#a17a05; font-family:timesnewroman; margin-bottom: 18px;">Diamond Membership</h3>
+            <div style="font-size:2rem; margin-bottom: 18px;">
+                <span style="color:#888; text-decoration: line-through; margin-right: 18px;">139.00</span>
+                <span style="color:#27ae60; font-weight:bold;">$119.00</span>
+            </div>
+            <a href="{% url 'membership_details' %}?plan_name=Diamond Membership&plan_rate=119" style="font-size:1.2rem; color:#222; font-weight:bold;" class="btn btn-animated">Buy Now</a>
+            {% comment %} <a href="/membership_details plan='Diamond' rate=119.00 %}" style="font-size:1.2rem; color:#222; font-weight:bold;" class="btn btn-animated">Buy Now</a> {% endcomment %}
+            <ul style="font-size:1.2rem; color:#444; line-height:2; margin-top: 24px;">
+                <li>Priority check-in and late check-out</li>
+                <li>Exclusive member discounts on rooms and dining</li>
+                <li>Complimentary access to hotel facilities</li>
+                <li>Special invitations to member-only events</li>
+            </ul>
+        </div>
+    </div>
+    <br>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+</div>
+{%endblock body%} 

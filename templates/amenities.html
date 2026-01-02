@@ -1,0 +1,564 @@
+{%extends "base.html"%}
+{% block title %}Amenities{% endblock title %}
+{% block body %}
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom,rgb(248, 244, 230), #d9e4f5); /* Soft gradient from light beige to light blue */
+    background-attachment: fixed; /* Keeps the background fixed while scrolling */
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+    
+    /* Image Slider Styling */
+    .slider {
+      width: 100%;
+      height: 700px;
+      overflow: hidden;
+      position: relative;
+      margin-top: 5px;
+      border-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      
+    }
+    
+    .slider-track {
+      display: flex;
+      display: flex;
+      width: calc(70% * 7);
+      animation: slide 20s linear infinite;
+      
+
+    }
+    
+    .slider img {
+      width: 50%;
+      height: 700px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+      border-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .slider img:hover {
+      transform: scale(1.05); /* Slight zoom effect on hover */
+    }
+    
+    
+    
+    /* Keyframes for Sliding Animation */
+    @keyframes slide {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+    .heading {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .heading h1 {
+      font-size: 4.0rem;
+      color: rgba(223, 179, 22);
+      font-family: lucida;
+    }
+    .heading p {
+      font-size: 1.2rem;
+      color: rgba(177, 151, 58);
+
+    }
+    .box {
+      width: 600px;
+      height: 600px;
+      margin: 20px auto;
+      text-align: center;
+      background-color:rgba(207, 243, 248, 0.8);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    .box img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 30px;
+    }
+    .box h2 {
+      font-size: 2.0rem;
+      color: black;
+      font-family: ariel;
+      margin-top: 20px;
+    }
+    .box p {
+      font-size: 1.1rem;
+      color: black
+        margin-top: 10px;
+
+    }
+    .box-image:hover {
+      transform: scale(1.05); /* Slight zoom effect on hover */
+    }
+    
+    .spa{
+        width: 700px;
+        height: 500px;
+        margin-left:200px;
+        object-fit:cover;
+    }
+    .text-center1 {
+        margin-top: 40px;
+        margin-left: 165px; 
+        font-size: 3.0rem;
+        color: rgba(223, 179, 22);
+        font-family: times new roman;
+    }
+    .text-center2 {
+        font-size: 1.2rem;
+        color: rgba(177, 151, 58);
+        margin-top: 10px;
+        margin-left: 250px; 
+        font-family: cursive;
+    }
+    .text-center3{
+      font-size: 1.2rem;
+        color: rgba(177, 151, 58);
+        margin-top: 10px;
+        margin-left: 135px; 
+        font-family: cursive;
+    }
+    .text-center4{
+      font-size: 1.2rem;
+      color: rgba(177, 151, 58);
+      margin-top: 10px;
+      margin-left: 182px; 
+      font-family: cursive;
+    }
+    .text-center5{
+      font-size: 1.2rem;
+      color: rgba(177, 151, 58);
+      margin-top: 10px;
+      margin-left: 155px; 
+      font-family: cursive;
+    }
+  .text-center6{
+    font-size: 1.2rem;
+    color: rgba(177, 151, 58);
+    margin-top: 10px;
+    margin-left: 162px; 
+    font-family: cursive;
+  }
+    .spa-det{
+        width:800px;
+        height:400px;
+        margin-left:1000px;
+        margin-top:-620px;
+        
+    }
+    .spa-heading{
+        margin-left:200px;
+        margin-top:5px;
+        font-size: 1.9rem;
+        color: rgba(177, 151, 58);
+        font-family: times new roman;
+    }
+    .spa-heading1{
+        margin-left:200px;
+        
+        margin-top:5px;
+        font-size: 1.9rem;
+        color: rgba(177, 151, 58);
+        font-family: times new roman;
+    }
+    .spa-sub-heading{
+        margin-left:230px;
+        margin-top:20px;
+        font-size: 1.4rem;
+        color: rgba(177, 151, 58);
+        font-family: times new roman;
+    }
+    .spa:hover {
+        transform: scale(1.05); /* Slight zoom effect on hover */
+      }
+      .spa-modal {
+        display: none; /* Hidden by default */
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.8); /* Black background with opacity */
+      }
+      
+      .modal-content {
+        display: block;
+        margin-top:6.5%;
+        width: 1200px;
+        height: 700px;
+        border-radius: 10px;
+      }
+      
+      .modal-content:hover {
+        transform: scale(1.05); /* Slight zoom effect on hover */
+        transition: transform 0.3s ease;
+      }
+      
+      .close {
+        position: absolute;
+        top: 20px;
+        right: 35px;
+        color: #fff;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      
+      .close:hover,
+      .close:focus {
+        color: #f7c08a;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      
+      #caption {
+        text-align: center;
+        color: #fff;
+        font-size: 1.2rem;
+        margin-top: 10px;
+      }
+
+
+
+
+    
+    
+</style>
+<body>
+<div class="slider">
+    <div class="slider-track">  
+      <img src="https://media.istockphoto.com/id/1492313721/photo/modern-luxury-villa-with-private-pool-at-night.jpg?s=2048x2048&w=is&k=20&c=LfMumq4FgyOwpJHSzmCg2EzDWFtLiQTVHBL-hG-cNdk=" alt="Hotel 1" />
+      <img src="https://media.istockphoto.com/id/496688546/photo/maid-working-at-a-hotel.jpg?s=2048x2048&w=is&k=20&c=DJBmTFlIp6Sltt9f-VCK8OeBjSL7X4juJV1SRTwUxq8=" alt="Hotel 2" />
+      <img src="https://cdn.pixabay.com/photo/2016/01/19/15/05/computer-1149148_1280.jpg" alt="Hotel 3" />
+      <img src="https://media.istockphoto.com/id/1146115827/photo/connect-to-wifi-wireless-internet-network-with-smartphone-at-coffee-shop-or-hotel-with-button.jpg?s=2048x2048&w=is&k=20&c=VqtIVZ1vDvNIEHMj9YObzatvkna1Tfpe8VLO5SYpid4=" alt="Hotel 4" />
+      <img src="https://media.istockphoto.com/id/1428412216/photo/a-male-chef-pouring-sauce-on-meal.jpg?s=1024x1024&w=is&k=20&c=AKniOB31W7IVKrd7rHPyBQGlg9CCkfSHb2nvVl2bcLs=" alt="Hotel 5" />
+      <img src="https://media.istockphoto.com/id/1780138130/photo/room-service.jpg?s=2048x2048&w=is&k=20&c=yiCDuJancOF1NB5uplLOhxSx_pJSR2DRUxl2yKm5T4A=" alt="Hotel 6" />
+      <img src="https://media.istockphoto.com/id/1284082197/photo/black-mom-and-daughter-in-bathrobes-lying-with-cucumber-slices-on-eyes.jpg?s=2048x2048&w=is&k=20&c=LN08ybdt496Yf-3qhjar9mjoHM7Gi8Q_tPiVQwIumD8=" alt="Hotel 7" />
+      <img src="https://journeyjunket.com/wp-content/uploads/2022/04/Hotel-Laundry-Services-101-Is-It-Worth-It-04012022.jpg" alt="Hotel 8" />
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="heading">
+    <h1 class="text-center">__________Comforts We Provide__________</h1>
+    <p class="text-center">Explore our luxurious amenities designed for your comfort and relaxation.</p>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="box1">
+    <img class=spa src="https://cdn.pixabay.com/photo/2020/04/17/12/28/pool-5055009_1280.jpg" alt="Spa" class="img-fluid" onclick="openModal(this)"></img>
+    
+        <h2 class="text-center1">________Outdoor/Indoor Pool_______</h2>
+        <h6 class="text-center2">Relax and rejuvenate in our crystal-clear indoor and outdoor pools.</h6>
+    
+        <div class=spa-det>     
+            <h1 class=spa-heading>---Operating Hours: 9:00 AM - 9:00 PM---</h1>
+            <br>
+            <h2 class=spa-heading1>---Services Offered---</h2>
+            <ul spa-heading>
+                <li class=spa-sub-heading>Fresh water</li>
+                <li class=spa-sub-heading>Changing area with private lockers</li>
+                <li class=spa-sub-heading>Refreshment drink/juice available</li>
+                <li class=spa-sub-heading>High scurity near the pool area</li>
+                <li class=spa-sub-heading>Poolside Lounge Chairs</li>
+                <li class=spa-sub-heading>Towel Service</li>
+                <li class=spa-sub-heading>Kids' Pool Section</li>
+            </ul>
+            <br>
+            
+            
+        </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="box1">
+    <img class=spa src="https://cdn.pixabay.com/photo/2020/07/09/23/40/spa-5388990_1280.jpg" alt="Spa" class="img-fluid" onclick="openModal(this)"></img>
+    
+        <h2 class="text-center1">______Spa and Wellness Center______</h2>
+        <h6 class="text-center2">Indulge in a range of rejuvenating treatments and therapies.</h6>
+    
+        <div class=spa-det>     
+            <h1 class=spa-heading>---Operating Hours: 9:00 AM - 8:00 PM---</h1>
+            <br>
+            <h2 class=spa-heading1>---Services Offered---</h2>
+            <ul spa-heading>
+                <li class=spa-sub-heading>Therapeutic Massages</li>
+                <li class=spa-sub-heading>Facials and Skin Treatments</li>
+                <li class=spa-sub-heading>Body Scrubs and Wraps</li>
+                <li class=spa-sub-heading>Aromatherapy</li>
+                <li class=spa-sub-heading>Steam and Sauna Facilities</li>
+                <li class=spa-sub-heading>Yoga and Meditation Sessions</li>
+                <li class=spa-sub-heading>Manicure and Pedicure Services</li>
+            </ul>
+            <br>
+            
+            
+        </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="box1">
+    <img class=spa src="https://images.hindustantimes.com/rf/image_size_960x540/HT/p2/2018/06/12/Pictures/_18084b44-6e2a-11e8-9a75-8898ac94ce9e.jpg"></img>
+    
+        <h2 class="text-center1">_________24/7 Room Service________</h2>
+        <h6 class="text-center3">Experience unparalleled convenience with our 24/7 room service, catering to your every need.</h6>
+    
+        <div class=spa-det>     
+            <h1 class=spa-heading>---Operating Hours: 24/7---</h1>
+            <br>
+            <h2 class=spa-heading1>---Services Offered---</h2>
+            <ul spa-heading>
+                <li class=spa-sub-heading>Wake-Up Call Service</li>
+                <li class=spa-sub-heading>In-Room Dining</li>
+                <li class=spa-sub-heading>Personalized Concierge Assistance</li>
+                <li class=spa-sub-heading>Extra Bedding and Amenities</li>
+                <li class=spa-sub-heading>Special Requests</li>
+                <li class=spa-sub-heading>Daily Housekeeping</li>
+                <li class=spa-sub-heading>Laundry and Dry Cleaning Services</li>
+            </ul>
+            <br>
+          
+            
+        </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="box1">
+    <img class=spa src="https://tse4.mm.bing.net/th/id/OIP.JZqW6G5DqhNYHXhLYyfO7QHaFe?w=1024&h=758&rs=1&pid=ImgDetMain"></img>
+    
+        <h2 class="text-center1">__________Laundry Service_________</h2>
+        <h6 class="text-center4">Keep your wardrobe fresh and clean with our efficient and reliable laundry service.</h6>
+    
+        <div class=spa-det>     
+            <h1 class=spa-heading>---Operating Hours: 9:00 AM - 6:00 PM---</h1>
+            <br>
+            <h2 class=spa-heading1>---Services Offered---</h2>
+            <ul spa-heading>
+                <li class=spa-sub-heading>Clothes Washing and Drying</li>
+                <li class=spa-sub-heading>Ironing and Pressing</li>
+                <li class=spa-sub-heading>Dry Cleaning</li>
+                <li class=spa-sub-heading>Express Same-Day Service</li>
+                <li class=spa-sub-heading>Pickup and Delivery to Your Room</li>
+                <li class=spa-sub-heading>Special Care for Delicate Fabrics</li>
+                <li class=spa-sub-heading>Folding and Packaging</li>
+            </ul>
+            <br>
+            
+            
+        </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="box1">
+    <img class=spa src="https://www.shutterstock.com/shutterstock/photos/2447308247/display_1500/stock-photo-hotel-maids-making-bed-in-guest-room-focus-is-on-african-american-maid-2447308247.jpg"></img>
+    
+        <h2 class="text-center1">__________Housekeeping__________</h2>
+        <h6 class="text-center5">Enjoy a spotless and welcoming environment with our meticulous housekeeping services.</h6>
+    
+        <div class=spa-det>     
+            <h1 class=spa-heading>---Operating Hours: 9:00 AM - 7:00 PM---</h1>
+            <br>
+            <h2 class=spa-heading1>---Services Offered---</h2>
+            <ul spa-heading>
+                <li class=spa-sub-heading>Daily Room Cleaning</li>
+                <li class=spa-sub-heading>Bed Linen and Towel Replacement</li>
+                <li class=spa-sub-heading>Trash Removal</li>
+                <li class=spa-sub-heading>Restocking Toiletries</li>
+                <li class=spa-sub-heading>Turn-Down Service</li>
+                <li class=spa-sub-heading>Special Cleaning Requests</li>
+                <li class=spa-sub-heading>Sanitization and Hygiene Maintenance</li>
+            </ul>
+            <br>
+            
+            
+        </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="box1">
+    <img class=spa src="https://tse1.mm.bing.net/th/id/OIP.cbvZrxENceZqy03SJuxNcwHaEK?rs=1&pid=ImgDetMain"></img>
+    
+        <h2 class="text-center1">__________Doctor on call__________</h2>
+        <h6 class="text-center6">Access professional medical assistance anytime with our 24/7 doctor-on-call service.</h6>
+    
+        <div class=spa-det>     
+            <h1 class=spa-heading>---Operating Hours: 9:00 AM - 8:00 PM---</h1>
+            <br>
+            <h2 class=spa-heading1>---Services Offered---</h2>
+            <ul spa-heading>
+                <li class=spa-sub-heading>24/7 Emergency Medical Assistance</li>
+                <li class=spa-sub-heading>First Aid and Basic Treatment</li>
+                <li class=spa-sub-heading>Health Checkups</li>
+                <li class=spa-sub-heading>Prescription Services</li>
+                <li class=spa-sub-heading>Coordination with Nearby Hospitals</li>
+                <li class=spa-sub-heading>Specialized Medical Consultations</li>
+                <li class=spa-sub-heading>On-Site Medical Equipment Availability</li>
+            </ul>
+            <br>
+            
+            
+        </div>
+</div>
+<div id="spaModal" class="spa-modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImage">
+    <div id="caption"></div>
+</div>
+<script>
+    function openModal(image) {
+      const modal = document.getElementById("spaModal");
+      const modalImage = document.getElementById("modalImage");
+      const caption = document.getElementById("");
+    
+      modal.style.display = "block";
+      modalImage.src = image.src;
+      caption.innerHTML = image.alt;
+    }
+    
+    function closeModal() {
+      const modal = document.getElementById("spaModal");
+      modal.style.display = "none";
+    }
+</script>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</div>
+</body>
+{%endblock body%}
