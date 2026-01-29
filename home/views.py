@@ -952,3 +952,84 @@ def generate_invoice_no():
     rand_part = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
     return f"INV-{date_part}-{rand_part}"
 
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.http import JsonResponse
+from .models import Feedback  # Assuming you have a Feedback model
+
+def submit_feedback(request):
+    if request.method == 'POST':
+        rating = request.POST.get('rating')
+        feedback_text = request.POST.get('feedback')
+        if rating and feedback_text:
+            # Save feedback to the database
+            Feedback.objects.create(rating=rating, feedback=feedback_text)
+            # Return a JSON response for success
+            return JsonResponse({'success': True, 'message': 'Feedback submitted successfully!'})
+        else:
+            # Return a JSON response for error
+            return JsonResponse({'success': False, 'message': 'Please fill in all fields.'}, status=400)
+    return JsonResponse({'success': False, 'message': 'Invalid request method.'}, status=405)
+
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import Booking
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import Booking_Successful
+
+@login_required
+def book_room(request):
+    if request.method == 'POST':
+        # Get booking details from the form
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        room_name = request.POST.get('room_name')
+        room_rate = request.POST.get('room_rate')
+        checkin = request.POST.get('checkin')
+        checkout = request.POST.get('checkout')
+        guests = request.POST.get('guests')
+        rooms_required = request.POST.get('rooms_required')
+        total_amount = request.POST.get('total_amount')
+        taxes = request.POST.get('taxes')
+        grand_total = request.POST.get('grand_total')
+
+        # Save booking details to the database
+        booking = Booking_Successful.objects.create(
+            user=request.user,
+            name=name,
+            email=email,
+            phone=phone,
+            room_name=room_name,
+            room_rate=room_rate,
+            checkin=checkin,
+            checkout=checkout,
+            guests=guests,
+            rooms_required=rooms_required,
+            total_amount=total_amount,
+            taxes=taxes,
+            grand_total=grand_total,
+            payment_status='Pending'
+        )
+        booking.save()
+
+        # Add a success message
+        messages.success(request, 'Your booking was successful!')
+        return redirect('booking_successful')  # Redirect to the booking successful page
+    return render(request, 'booking.html')
+
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from .models import Booking_Successful
+
+@login_required
+def my_bookings(request):
+    # Fetch all bookings for the logged-in user
+    bookings = Booking_Successful.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'mybookings.html', {'bookings': bookings})

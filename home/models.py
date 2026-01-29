@@ -21,7 +21,7 @@ class Booking_Successful(models.Model):
     total_amount=models.DecimalField(max_digits=10, decimal_places=2)
     taxes=models.DecimalField(max_digits=10, decimal_places=2)
     grand_total=models.DecimalField(max_digits=10, decimal_places=2)
-    payment_status=models.CharField(max_length=50, default='Pending')
+    payment_status=models.CharField(max_length=50, default='Pay at Hotel')
     invoice_pdf=models.FileField(upload_to='invoices/', null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     message = models.TextField(null=True)
@@ -64,3 +64,28 @@ class Membership_Confirmation(models.Model):
     def __str__(self):
         return f"Membership Confirmation for {self.name}"
 
+from django.db import models
+
+class Feedback(models.Model):
+    rating = models.IntegerField()
+    feedback = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Feedback {self.id} - Rating: {self.rating}"
+    
+
+from django.db import models
+from django.contrib.auth.models import User
+
+class Booking(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Link booking to a user
+    room_name = models.CharField(max_length=255)
+    checkin = models.DateField()
+    checkout = models.DateField()
+    guests = models.IntegerField()
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Booking for {self.user.username} - {self.room_name}"

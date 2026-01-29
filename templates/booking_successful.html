@@ -161,6 +161,60 @@
         color: #ffc107;
         transform: scale(1.2);
     }
+
+/* Popup Styles */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.popup-box h2 {
+    color: #28a745;
+    margin-bottom: 15px;
+}
+.popup-box button {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.popup-box button:hover {
+    background-color: #218838;
+}
+
+/* Animation for popup */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
 </style>
 <br>
 <br>
@@ -240,7 +294,7 @@
 <br>
 <div class="feedback-container">
     <h3>Share Your Feedback With Us!</h3>
-    <form method="POST" action="{% url 'submit_feedback' %}">
+    <form method="POST" action="{% url 'submit_feedback' %}" onsubmit="showPopup(event)">
         {% csrf_token %}
         <div class="star-rating">
             <input type="radio" id="star5" name="rating" value="5">
@@ -257,14 +311,53 @@
         <textarea name="feedback" rows="5" placeholder="Write your feedback here..."></textarea>
         <button type="submit">Submit Feedback</button>
     </form>
-    {% if messages %}
-  {% for message in messages %}
-    <div class="alert alert-success" style="margin-bottom: 20px;">
-      {{ message }}
-    </div>
-  {% endfor %}
-{% endif %}
 </div>
+
+<!-- Popup for feedback submission -->
+<div class="popup" id="popup">
+    <div class="popup-box">
+        <h2>Thank You!</h2>
+        <p>Your feedback has been submitted successfully.</p>
+        <button onclick="closePopup()">OK</button>
+    </div>
+</div>
+<script>
+function getCSRFToken() {
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    return csrfToken;
+}
+function showPopup(e) {
+    e.preventDefault(); // Prevent form submission
+    const form = e.target;
+    const popup = document.getElementById('popup');
+
+    // Simulate form submission
+    fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            popup.style.display = 'flex'; // Show popup
+        } else {
+            alert('There was an error submitting your feedback. Please try again.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('There was an error submitting your feedback. Please try again.');
+    });
+}
+
+function closePopup() {
+    const popup = document.getElementById('popup');
+    popup.style.display = 'none';
+    window.location.reload(); // Reload the page to clear the form
+}
+</script>
 <br>
 <br>
 <br>
