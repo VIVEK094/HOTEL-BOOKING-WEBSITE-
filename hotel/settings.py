@@ -133,17 +133,15 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # settings.py
-STRIPE_PUBLIC_KEY = 'pk_test_51RN9tQ4CpgDuz9crfLymDWuPXHJGx8Fd1fX2slvb7kJoZBAhyVkGNgEzPOnaIxZV3vpdvSXsZCgJPJDatH2Db3br00zjnQaNXq'
-# STRIPE_SECRET_KEY = 
+STRIPE_PUBLIC_KEY = os.getenv('pk_test_51RN9tQ4CpgDuz9crfLymDWuPXHJGx8Fd1fX2slvb7kJoZBAhyVkGNgEzPOnaIxZV3vpdvSXsZCgJPJDatH2Db3br00zjnQaNXq')
 STRIPE_SECRET_KEY = os.getenv('sk_test_51RN9tQ4CpgDuz9crroYfDD8LWInYnmKZiblcozJA3GH7VedA54Pi4sqci4FEPh3TjDAYj5rB2tizVY9gGGewYp8u00N4vE2aav')
 
-PAYPAL_CLIENT_ID = 'ATcFMrMkIz_IgJSNYB6lyusqwz2MhARukGg2F_P3MrFor-ek5kfUODLOCWwFbqvCcpOu41rYkPH912ZC'
-PAYPAL_CLIENT_SECRET = 'EGCtDzv-yfFPFO_QG5l-uT-FtkGkJQ9koDe1URXtfPha3A8GR1cJlFIrNWEZ6Ea7FfqOnw7vlx0ld7SE'
+PAYPAL_CLIENT_ID = os.getenv('ATcFMrMkIz_IgJSNYB6lyusqwz2MhARukGg2F_P3MrFor-ek5kfUODLOCWwFbqvCcpOu41rYkPH912ZC')
+PAYPAL_CLIENT_SECRET = os.getenv('EGCtDzv-yfFPFO_QG5l-uT-FtkGkJQ9koDe1URXtfPha3A8GR1cJlFIrNWEZ6Ea7FfqOnw7vlx0ld7SE')    
 PAYPAL_MODE = 'sandbox'  # Change to 'live' for production
 # settings.py
 TWILIO_ACCOUNT_SID = os.getenv('ACf2782ac8608b55c1d64f8529d3e8fcae')
-# TWILIO_ACCOUNT_SID = 
-TWILIO_AUTH_TOKEN = 'c47a9e81407dd4e77549288bfbee1b84'
+TWILIO_AUTH_TOKEN = os.getenv('c47a9e81407dd4e77549288bfbee1b84')
 # TWILIO_PHONE_NUMBER = '+916295810903'  # Your Twilio phone number
 TWILIO_WHATSAPP_NUMBER = '+916295810903'  # Twilio's WhatsApp sandbox number
 
@@ -151,10 +149,10 @@ RAZORPAY_KEY_ID = 'your_razorpay_key_id'
 RAZORPAY_KEY_SECRET = 'your_razorpay_key_secret'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # or your provider
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'vivekmajumdar150@gmail.com'
-EMAIL_HOST_PASSWORD = 'bwsv fqbl hhyx jgdp'
+EMAIL_HOST = os.getenv('smtp.gmail.com')  # or your provider
+EMAIL_PORT = os.getenv('EMAIL_PORT', 587)
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True') == 'True'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'vivekmajumdar150@gmail.com')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'bwsv fqbl hhyx jgdp')
 
 LOGIN_URL = '/login/'  # Update this to the correct URL for your login page
