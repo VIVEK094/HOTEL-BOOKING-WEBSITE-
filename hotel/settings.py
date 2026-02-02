@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from logging import config
 from pathlib import Path
 import os
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -130,25 +131,24 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Stripe Configuration
-STRIPE_PUBLIC_KEY = 'pk_test_51RN9tQ4CpgDuz9crfLymDWuPXHJGx8Fd1fX2slvb7kJoZBAhyVkGNgEzPOnaIxZV3vpdvSXsZCgJPJDatH2Db3br00zjnQaNXq'
-STRIPE_SECRET_KEY = 'sk_test_51RN9tQ4CpgDuz9crroYfDD8LWInYnmKZiblcozJA3GH7VedA54Pi4sqci4FEPh3TjDAYj5rB2tizVY9gGGewYp8u00N4vE2aav'
+STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY')
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
 
-PAYPAL_CLIENT_ID = 'ATcFMrMkIz_IgJSNYB6lyusqwz2MhARukGg2F_P3MrFor-ek5kfUODLOCWwFbqvCcpOu41rYkPH912ZC'
-PAYPAL_CLIENT_SECRET = 'EGCtDzv-yfFPFO_QG5l-uT-FtkGkJQ9koDe1URXtfPha3A8GR1cJlFIrNWEZ6Ea7FfqOnw7vlx0ld7SE'
+PAYPAL_CLIENT_ID = config('PAYPAL_CLIENT_ID')
+PAYPAL_CLIENT_SECRET = config('PAYPAL_CLIENT_SECRET')
 PAYPAL_MODE = 'sandbox'  # Change to 'live' for production
-# settings.py
-TWILIO_ACCOUNT_SID = 'ACf2782ac8608b55c1d64f8529d3e8fcae'
-TWILIO_AUTH_TOKEN = 'c47a9e81407dd4e77549288bfbee1b84'
-# TWILIO_PHONE_NUMBER = '+916295810903'  # Your Twilio phone number
-TWILIO_WHATSAPP_NUMBER = '+916295810903'  # Twilio's WhatsApp sandbox number
+
+TWILIO_ACCOUNT_SID = config('TWILIO_ACCOUNT_SID')
+TWILIO_AUTH_TOKEN = config('TWILIO_AUTH_TOKEN')
+TWILIO_WHATSAPP_NUMBER = config('TWILIO_WHATSAPP_NUMBER')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  # or your provider
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'vivekmajumdar150@gmail.com'
-EMAIL_HOST_PASSWORD = 'bwsv fqbl hhyx jgdp'
-DEFAULT_FROM_EMAIL = 'vivekmajumdar150@gmail.com'
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 # EMAIL_HOST_USER = 'your_email@example.com'
 # EMAIL_HOST_PASSWORD = 'your_email_password'
 # EMAIL_HOST = 'smtp.your_email_provider.com'
