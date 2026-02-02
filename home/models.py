@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import now
 
 # Create your models here.
 from django.db import models
@@ -14,8 +15,8 @@ class Booking_Successful(models.Model):
     phone=models.CharField(max_length=15)
     room_name=models.CharField(max_length=100)
     room_rate=models.DecimalField(max_digits=10, decimal_places=2)
-    checkin=models.DateField()
-    checkout=models.DateField()
+    checkin=models.DateField(default=now)
+    checkout=models.DateField(default=now)
     guests=models.IntegerField()
     rooms_required=models.IntegerField(default=1)
     total_amount=models.DecimalField(max_digits=10, decimal_places=2)
@@ -26,6 +27,7 @@ class Booking_Successful(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     message = models.TextField(null=True)
     rating = models.IntegerField(default=5)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Booking Successful for {self.name}"
@@ -38,7 +40,11 @@ class Booking_Successful(models.Model):
 
 #     def __str__(self):
 #         return f"Feedback by {self.user.username} at {self.submitted_at}"
+import os
 
+# Replace hardcoded secrets with environment variables
+TWILIO_ACCOUNT_SID = os.getenv('TWILIO_ACCOUNT_SID')
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
 # Career Application model
 class CareerApplication(models.Model):
     name = models.CharField(max_length=100)
@@ -81,8 +87,8 @@ from django.contrib.auth.models import User
 class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # Link booking to a user
     room_name = models.CharField(max_length=255)
-    checkin = models.DateField()
-    checkout = models.DateField()
+    checkin = models.DateField(default=now)
+    checkout = models.DateField(default=now)
     guests = models.IntegerField()
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)

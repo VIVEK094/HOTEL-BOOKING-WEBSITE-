@@ -80,12 +80,8 @@ WSGI_APPLICATION = 'hotel.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'newdb',
-        'USER': 'vivek',
-        'PASSWORD': 'Hello123456',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -133,43 +129,31 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Stripe Configuration
+STRIPE_PUBLIC_KEY = 'pk_test_51RN9tQ4CpgDuz9crfLymDWuPXHJGx8Fd1fX2slvb7kJoZBAhyVkGNgEzPOnaIxZV3vpdvSXsZCgJPJDatH2Db3br00zjnQaNXq'
+STRIPE_SECRET_KEY = 'sk_test_51RN9tQ4CpgDuz9crroYfDD8LWInYnmKZiblcozJA3GH7VedA54Pi4sqci4FEPh3TjDAYj5rB2tizVY9gGGewYp8u00N4vE2aav'
+
+PAYPAL_CLIENT_ID = 'ATcFMrMkIz_IgJSNYB6lyusqwz2MhARukGg2F_P3MrFor-ek5kfUODLOCWwFbqvCcpOu41rYkPH912ZC'
+PAYPAL_CLIENT_SECRET = 'EGCtDzv-yfFPFO_QG5l-uT-FtkGkJQ9koDe1URXtfPha3A8GR1cJlFIrNWEZ6Ea7FfqOnw7vlx0ld7SE'
+PAYPAL_MODE = 'sandbox'  # Change to 'live' for production
 # settings.py
-# STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY','pk_test_51RN9tQ4CpgDuz9crfLymDWuPXHJGx8Fd1fX2slvb7kJoZBAhyVkGNgEzPOnaIxZV3vpdvSXsZCgJPJDatH2Db3br00zjnQaNXq')
-# STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY','sk_test_51RN9tQ4CpgDuz9crroYfDD8LWInYnmKZiblcozJA3GH7VedA54Pi4sqci4FEPh3TjDAYj5rB2tizVY9gGGewYp8u00N4vE2aav')
+TWILIO_ACCOUNT_SID = 'ACf2782ac8608b55c1d64f8529d3e8fcae'
+TWILIO_AUTH_TOKEN = 'c47a9e81407dd4e77549288bfbee1b84'
+# TWILIO_PHONE_NUMBER = '+916295810903'  # Your Twilio phone number
+TWILIO_WHATSAPP_NUMBER = '+916295810903'  # Twilio's WhatsApp sandbox number
 
-# PAYPAL_CLIENT_ID = config('PAYPAL_CLIENT_ID','ATcFMrMkIz_IgJSNYB6lyusqwz2MhARukGg2F_P3MrFor-ek5kfUODLOCWwFbqvCcpOu41rYkPH912ZC')
-# PAYPAL_CLIENT_SECRET = config('PAYPAL_CLIENT_SECRET','EGCtDzv-yfFPFO_QG5l-uT-FtkGkJQ9koDe1URXtfPha3A8GR1cJlFIrNWEZ6Ea7FfqOnw7vlx0ld7SE')    
-# PAYPAL_MODE = 'sandbox'  # Change to 'live' for production
-# # settings.py
-# TWILIO_ACCOUNT_SID = config('TWILIO_ACCOUNT_SID','ACf2782ac8608b55c1d64f8529d3e8fcae')
-# TWILIO_AUTH_TOKEN = config('TWILIO_AUTH_TOKEN','c47a9e81407dd4e77549288bfbee1b84')
-# # TWILIO_PHONE_NUMBER = '+916295810903'  # Your Twilio phone number
-# TWILIO_WHATSAPP_NUMBER = '+916295810903'  # Twilio's WhatsApp sandbox number
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # or your provider
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'vivekmajumdar150@gmail.com'
+EMAIL_HOST_PASSWORD = 'bwsv fqbl hhyx jgdp'
+DEFAULT_FROM_EMAIL = 'vivekmajumdar150@gmail.com'
+# EMAIL_HOST_USER = 'your_email@example.com'
+# EMAIL_HOST_PASSWORD = 'your_email_password'
+# EMAIL_HOST = 'smtp.your_email_provider.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = config('EMAIL_HOST', 'smtp.gmail.com')  # or your provider
-# EMAIL_PORT = config('EMAIL_PORT', 587)
-# EMAIL_USE_TLS = config('EMAIL_USE_TLS', 'True') == 'True'
-# EMAIL_HOST_USER = config('EMAIL_HOST_USER', 'vivekmajumdar150@gmail.com')
-# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', 'bwsv fqbl hhyx jgdp')
-# LOGIN_URL = '/login/'  # Update this to the correct URL for your login page
+LOGIN_URL = '/login/'  # Update this to the correct URL for your login page
 
-from decouple import config
-
-# Replace os.getenv with config
-SECRET_KEY = config('DJANGO_SECRET_KEY', default='fallback-secret-key')
-STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY', default='')
-STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='')
-PAYPAL_CLIENT_ID = config('PAYPAL_CLIENT_ID', default='')
-PAYPAL_CLIENT_SECRET = config('PAYPAL_CLIENT_SECRET', default='')
-PAYPAL_MODE = config('PAYPAL_MODE', default='sandbox')
-TWILIO_ACCOUNT_SID = config('TWILIO_ACCOUNT_SID', default='')
-TWILIO_AUTH_TOKEN = config('TWILIO_AUTH_TOKEN', default='')
-TWILIO_WHATSAPP_NUMBER = config('TWILIO_WHATSAPP_NUMBER', default='')
-RAZORPAY_KEY_ID = config('RAZORPAY_KEY_ID', default='')
-RAZORPAY_KEY_SECRET = config('RAZORPAY_KEY_SECRET', default='')
-EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
-EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
-EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
-EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')

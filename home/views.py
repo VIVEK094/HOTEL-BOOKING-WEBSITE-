@@ -55,21 +55,25 @@ def Dining(request):
 
 
 def login_view(request):
+    # Log out the user when they open the login page
+    if request.user.is_authenticated:
+        logout(request)
+
     if request.method == "POST":
 
         # Get the username and password from the request
         username = request.POST.get('username')
         password = request.POST.get('password')
-        print(username,password)
+        print(username, password)
         # Authenticate the user
         user = authenticate(username=username, password=password)
         if user is not None:
             # If the user is authenticated, redirect to the home page
-            login(request,user)
+            login(request, user)
             return redirect('/')
         else:
             # If authentication fails, show an error message
-            return render(request, 'signin.html', {'error': 'Invalid username or password'})
+            return render(request, 'login.html', {'error': 'Incorrect username or password'})
     
     return render(request, 'login.html')
 
@@ -343,6 +347,8 @@ def payment_page(request):
     name = request.GET.get('name', 'Unknown Name')
     email = request.GET.get('email', 'Unknown email')
     phone = request.GET.get('phone', 'Unknown phone')
+    if phone and not phone.startswith('+'):
+        phone = '+91' + phone
     room_name = request.GET.get('room_name', 'Unknown Room')
     room_rate = float(request.GET.get('room_rate', 0) or 0)  # Default to 0 if empty
     checkin = request.GET.get('checkin', 'N/A')
@@ -613,13 +619,13 @@ def booking_successful(request):
         f"We look forward to hosting you!\n"
         f"Hotel Grand View"
     )
-    send_mail(subject, message, None, [email])
-    from django.core.mail import EmailMessage  # Add this import at the top of the file if not already present
+    from_email = settings.DEFAULT_FROM_EMAIL  # Use a valid email address from settings
+    send_mail(subject, message, from_email, [email])
 
     email_msg = EmailMessage(
         subject=subject,
         body=message,
-        from_email=None,  # Replace with your email if needed
+        from_email=from_email,  # Use the same valid email address
         to=[email],
     )
     # Generate the PDF content
@@ -720,7 +726,7 @@ def mybookings_view(request):
         # Redirect to login page if the user is not authenticated
         return redirect('signin')
 
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 
 def submit_application(request):
 
@@ -1033,3 +1039,5 @@ def my_bookings(request):
     # Fetch all bookings for the logged-in user
     bookings = Booking_Successful.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'mybookings.html', {'bookings': bookings})
+
+
